@@ -7,6 +7,7 @@ body {
     padding: 0;
     margin: 0;
     font-family: var(--font-montserrat);
+    @apply text-gray-700;
 }
 
 a {
@@ -23,19 +24,18 @@ img {
     height: auto;
 }
 
-h1,
-h2,
-p,
-ul {
-    margin: 0;
+h1 {
+    @apply text-2xl font-bold mb-3;
 }
 
-ul {
-    padding: 0;
-    list-style: none;
+p {
+    @apply text-sm;
 }
 
-button {
-    padding: 0.5rem 1rem;
-    font-weight: bold;
+small {
+    @apply text-xs;
+}
+
+a {
+    @apply text-primary;
 }
