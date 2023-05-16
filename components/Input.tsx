@@ -1,11 +1,23 @@
+import { ChangeEvent } from 'react'
+import {
+    ExclamationCircleIcon,
+    InformationCircleIcon
+} from '@heroicons/react/24/solid'
+
 export default function Input({
     label,
     type,
-    name
+    name,
+    hintMessage,
+    errorMessage,
+    onChange
 }: {
     label: string
     type: string
     name: string
+    hintMessage?: string
+    errorMessage?: string
+    onChange?: (event: ChangeEvent<HTMLInputElement>) => void
 }) {
     return (
         <div className="flex flex-col space-y-1">
@@ -13,8 +25,23 @@ export default function Input({
             <input
                 type={type}
                 name={name}
-                className="border rounded-lg leading-10 px-4 focus:border-primary focus:outline-none text-sm text-gray-700"
+                className={`border rounded-lg leading-10 px-4 focus:border-primary focus:outline-none text-sm text-gray-700 ${
+                    errorMessage && 'border-danger'
+                }`}
+                onChange={onChange}
             />
+            {hintMessage && (
+                <div className="text-gray-500 flex items-center space-x-1">
+                    <InformationCircleIcon className="w-5 h-5" />
+                    <span className="text-xs">{hintMessage}</span>
+                </div>
+            )}
+            {errorMessage && (
+                <div className="text-danger flex items-center space-x-1">
+                    <ExclamationCircleIcon className="w-5 h-5" />
+                    <span className="text-xs">{errorMessage}</span>
+                </div>
+            )}
         </div>
     )
 }

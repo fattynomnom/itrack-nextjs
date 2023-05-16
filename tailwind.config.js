@@ -12,7 +12,8 @@ module.exports = {
         extend: {
             colors: {
                 primary: colors.blue[300],
-                secondary: colors.indigo[300]
+                secondary: colors.indigo[300],
+                danger: '#e63946'
             },
             fontFamily: {
                 sans: ['var(--font-montserrat)', ...fontFamily.sans]

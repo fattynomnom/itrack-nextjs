@@ -7,6 +7,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroicons/react": "^2.0.18",
     "firebase": "^9.19.1",
     "next": "latest",
     "react": "18.2.0",
