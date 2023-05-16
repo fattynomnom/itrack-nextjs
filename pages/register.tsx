@@ -32,8 +32,8 @@ export default function Login() {
     const PASSWORD_RULE = VALIDATION_MESSAGES.MIN_CHARACTERS(6, 'Password')
 
     const [formData, setFormData] = useState<FormData>({ ...defaultFormData })
-
     const [errors, setErrors] = useState<FormData>({ ...defaultFormData })
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const setData = (event: ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [event.target.name]: event.target.value })
@@ -81,6 +81,8 @@ export default function Login() {
 
         if (!validate()) return
 
+        setIsLoading(true)
+
         const { email, password } = formData
         try {
             await createUser(email, password)
@@ -107,6 +109,8 @@ export default function Login() {
                 }
             }
             logError(error)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -148,7 +152,11 @@ export default function Login() {
                     />
                 </div>
 
-                <Button label="Register an account" type="submit" />
+                <Button
+                    label="Register an account"
+                    type="submit"
+                    loading={isLoading}
+                />
             </form>
 
             <small className="mt-3 text-center">
