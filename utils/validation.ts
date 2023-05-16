@@ -2,6 +2,8 @@ export const VALIDATION_MESSAGES = {
     REQUIRED_FIELD: 'This is a required field',
     INVALID_EMAIL: 'Please enter a valid email address',
     PASSWORD_DONT_MATCH: 'Password does not match',
+    WRONG_PASSWORD: 'Incorrect password',
+    NOT_FOUND: (resource: string) => `${resource} not found`,
     MIN_CHARACTERS: (charsCount: number, field: string = 'Value') =>
         `${field} should be at least ${charsCount} characters long`,
     FIELD_IN_USE: (field: string) => `${field} is already in use`

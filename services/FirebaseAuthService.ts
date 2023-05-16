@@ -13,7 +13,8 @@ export const AUTH_ERROR_CODES = {
     EMAIL_IN_USE: 'auth/email-already-in-use',
     INVALID_EMAIL: 'auth/invalid-email',
     WRONG_PASSWORD: 'auth/wrong-password',
-    WEAK_PASSWORD: 'auth/weak-password'
+    WEAK_PASSWORD: 'auth/weak-password',
+    NOT_FOUND: 'auth/user-not-found'
 }
 
 export const createUser = async (
