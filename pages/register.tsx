@@ -4,9 +4,15 @@ import Button from '../components/Button'
 import SplitPageLayout from '../components/SplitPageLayout'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { User } from '../types/User'
-import { isEmail, isRequiredFieldsFilled } from '../utils/validation'
-import { createUser } from '../services/FirebaseAuthService'
+import {
+    VALIDATION_MESSAGES,
+    getEmailError,
+    getMinCharactersError,
+    isRequiredFieldsFilled
+} from '../utils/validation'
+import { AUTH_ERROR_CODES, createUser } from '../services/FirebaseAuthService'
 import { logError } from '../services/LoggingService'
+import { useRouter } from 'next/router'
 
 interface FormData extends Pick<User, 'name' | 'email'> {
     password: string
@@ -14,12 +20,16 @@ interface FormData extends Pick<User, 'name' | 'email'> {
 }
 
 export default function Login() {
+    const router = useRouter()
+
     const defaultFormData: FormData = {
         name: '',
         email: '',
         password: '',
         reenteredPassword: ''
     }
+
+    const PASSWORD_RULE = VALIDATION_MESSAGES.MIN_CHARACTERS(6, 'Password')
 
     const [formData, setFormData] = useState<FormData>({ ...defaultFormData })
 
@@ -44,16 +54,21 @@ export default function Login() {
             return false
         }
 
-        const emailError = isEmail(formData.email)
+        const emailError = getEmailError(formData.email)
         if (emailError) {
             setErrors({ ...errors, email: emailError })
+            return false
+        }
+
+        if (getMinCharactersError(formData.password, 6)) {
+            setErrors({ ...errors, password: PASSWORD_RULE })
             return false
         }
 
         if (formData.password !== formData.reenteredPassword) {
             setErrors({
                 ...errors,
-                reenteredPassword: 'Password does not match'
+                reenteredPassword: VALIDATION_MESSAGES.PASSWORD_DONT_MATCH
             })
             return false
         }
@@ -69,8 +84,28 @@ export default function Login() {
         const { email, password } = formData
         try {
             await createUser(email, password)
-            // TODO: direct user to dashboard
+            router.push('/dashboard')
         } catch (error) {
+            if (error.code) {
+                if (error.code === AUTH_ERROR_CODES.EMAIL_IN_USE) {
+                    setErrors({
+                        ...errors,
+                        email: VALIDATION_MESSAGES.FIELD_IN_USE('Email')
+                    })
+                    return
+                }
+                if (error.code === AUTH_ERROR_CODES.INVALID_EMAIL) {
+                    setErrors({
+                        ...errors,
+                        email: VALIDATION_MESSAGES.INVALID_EMAIL
+                    })
+                    return
+                }
+                if (error.code === AUTH_ERROR_CODES.WEAK_PASSWORD) {
+                    setErrors({ ...errors, password: PASSWORD_RULE })
+                    return
+                }
+            }
             logError(error)
         }
     }
@@ -102,7 +137,7 @@ export default function Login() {
                         name="password"
                         onChange={setData}
                         errorMessage={errors.password}
-                        hintMessage="Password should be at least 6 characters long"
+                        hintMessage={!errors.password && PASSWORD_RULE}
                     />
                     <Input
                         label="Re-enter password"
