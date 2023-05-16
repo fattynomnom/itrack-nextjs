@@ -5,23 +5,24 @@ import SplitPageLayout from '../components/SplitPageLayout'
 
 export default function Login() {
     return (
-        <SplitPageLayout pageName='Login'>
-            <h1>Hello</h1>
+        <SplitPageLayout pageName='Register'>
+            <h1>Register</h1>
             <p>
-                Login to your account or click register if you do not have
-                one.
+                Register your account to get started!
             </p>
 
             <div className="mt-10 space-y-5 flex flex-col mb-7">
+                <Input label="Name" type="text" name="name" />
                 <Input label="Email" type="text" name="email" />
                 <Input label="Password" type="password" name="password" />
+                <Input label="Re-enter password" type="password" name="password" />
             </div>
 
-            <Button label="Login" />
+            <Button label="Register an account" />
 
             <small className="mt-3 text-center">
-                Don&apos;t have an account? Don&apos;t worry,{' '}
-                <Link href="/register">register here</Link>
+                Already have an account?{' '}
+                <Link href="/login">Login here</Link>
             </small>
         </SplitPageLayout>
     )
