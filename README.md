@@ -9,4 +9,6 @@ This is a starter template for [Learn Next.js](https://nextjs.org/learn).
 
 [x] Registration
 [x] Login
+[] Registration tests
+[] Login tests
 [] Middleware for authenticated & unauthenticated users
