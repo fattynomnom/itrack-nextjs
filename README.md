@@ -1,3 +1,5 @@
+### About
+
 This is a starter template for [Learn Next.js](https://nextjs.org/learn).
 This is a work-in-progress to learn NextJS
 
@@ -12,8 +14,10 @@ This is a work-in-progress to learn NextJS
 
 ### Todos
 
-[x] Registration
-[x] Login
-[x] Registration tests
-[] Login tests
-[] Middleware for authenticated & unauthenticated users
+-   [x] Registration
+-   [x] Login
+-   [x] Registration tests
+-   [] Login tests
+-   [] Registration responsiveness
+-   [] Login responsiveness
+-   [] Middleware for authenticated & unauthenticated users

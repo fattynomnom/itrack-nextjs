@@ -7,6 +7,7 @@ import {
 import '@testing-library/jest-dom'
 import { VALIDATION_MESSAGES } from '../../utils/validation'
 import { act } from 'react-dom/test-utils'
+import mocks from '../../jest.setup'
 
 // #region reusable functions
 const clickRegisterButton = () => screen.getByTestId('register-button').click()
@@ -26,10 +27,6 @@ const setInputValue = (testId: string, value: string) => {
 // #endregion
 
 // #region mocking
-const useRouter = jest.spyOn(require('next/router'), 'useRouter')
-const push = jest.fn()
-useRouter.mockImplementation(() => ({ push }))
-
 jest.mock('../../services/FirebaseAuthService')
 const createUserMock = createUser as jest.MockedFunction<typeof createUser>
 // #endregion
@@ -42,6 +39,14 @@ describe('Register', () => {
 
         expectErrorToBeDisplayedAs(
             'email-input-error-message',
+            VALIDATION_MESSAGES.REQUIRED_FIELD
+        )
+        expectErrorToBeDisplayedAs(
+            'password-input-error-message',
+            VALIDATION_MESSAGES.REQUIRED_FIELD
+        )
+        expectErrorToBeDisplayedAs(
+            'confirm-password-input-error-message',
             VALIDATION_MESSAGES.REQUIRED_FIELD
         )
     })
@@ -145,7 +150,7 @@ describe('Register', () => {
         })
 
         await waitFor(() => {
-            expect(push).toHaveBeenCalledWith('/dashboard')
+            expect(mocks.useRouterMock.push).toHaveBeenCalledWith('/dashboard')
         })
     })
 })

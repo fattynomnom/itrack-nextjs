@@ -109,6 +109,7 @@ export default function Login() {
                         name="email"
                         onChange={setData}
                         errorMessage={errors.email}
+                        dataTestId="email-input"
                     />
                     <Input
                         label="Password"
@@ -116,10 +117,16 @@ export default function Login() {
                         name="password"
                         onChange={setData}
                         errorMessage={errors.password}
+                        dataTestId="password-input"
                     />
                 </div>
 
-                <Button label="Login" type="submit" loading={isLoading} />
+                <Button
+                    label="Login"
+                    type="submit"
+                    loading={isLoading}
+                    dataTestId="login-button"
+                />
             </form>
 
             <small className="mt-3 text-center">
