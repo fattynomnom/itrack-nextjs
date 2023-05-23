@@ -9,15 +9,13 @@ export default function SplitPageLayout({
     children: ReactNode
 }) {
     return (
-        <main className="grid grid-cols-2 w-full h-full">
+        <main className="grid grid-cols-1 lg:grid-cols-2 w-full h-full">
             <Head>
                 <title>{pageName}</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <div className="bg-gradient-to-r from-secondary to-primary" />
-            <div className="flex flex-col p-28">
-                {children}
-            </div>
+            <div className="bg-gradient-to-r from-secondary to-primary hidden lg:block" />
+            <div className="flex flex-col p-28 self-center">{children}</div>
 
             <style jsx global>{`
                 html,

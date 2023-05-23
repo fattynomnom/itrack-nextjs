@@ -17,7 +17,7 @@ This is a work-in-progress to learn NextJS
 -   [x] Registration
 -   [x] Login
 -   [x] Registration tests
--   [] Login tests
--   [] Registration responsiveness
--   [] Login responsiveness
+-   [x] Login tests
+-   [x] Registration responsiveness
+-   [x] Login responsiveness
 -   [] Middleware for authenticated & unauthenticated users
