@@ -127,6 +127,7 @@ export default function Login() {
                         name="name"
                         onChange={setData}
                         errorMessage={errors.name}
+                        dataTestId="name-input"
                     />
                     <Input
                         label="Email"
@@ -134,6 +135,7 @@ export default function Login() {
                         name="email"
                         onChange={setData}
                         errorMessage={errors.email}
+                        dataTestId="email-input"
                     />
                     <Input
                         label="Password"
@@ -142,6 +144,7 @@ export default function Login() {
                         onChange={setData}
                         errorMessage={errors.password}
                         hintMessage={!errors.password && PASSWORD_RULE}
+                        dataTestId="password-input"
                     />
                     <Input
                         label="Re-enter password"
@@ -149,6 +152,7 @@ export default function Login() {
                         name="reenteredPassword"
                         onChange={setData}
                         errorMessage={errors.reenteredPassword}
+                        dataTestId="confirm-password-input"
                     />
                 </div>
 
@@ -156,6 +160,7 @@ export default function Login() {
                     label="Register an account"
                     type="submit"
                     loading={isLoading}
+                    dataTestId="register-button"
                 />
             </form>
 

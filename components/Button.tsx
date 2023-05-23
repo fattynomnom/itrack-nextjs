@@ -3,12 +3,14 @@ export default function Button({
     type = 'button',
     disabled = false,
     loading = false,
+    dataTestId = '',
     onClick
 }: {
     label: string
     type?: 'button' | 'submit'
     disabled?: boolean
     loading?: boolean
+    dataTestId?: string
     onClick?: () => void
 }) {
     return (
@@ -17,6 +19,7 @@ export default function Button({
             className="px-4 py-3 bg-primary rounded-lg text-white text-sm font-bold tracking-wider bg-gradient-to-r from-secondary to-primary disabled:opacity-50 flex justify-center"
             onClick={onClick}
             disabled={loading || disabled}
+            data-testid={dataTestId}
         >
             {loading && (
                 <svg

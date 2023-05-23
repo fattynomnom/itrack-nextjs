@@ -10,6 +10,7 @@ export default function Input({
     name,
     hintMessage,
     errorMessage,
+    dataTestId = '',
     onChange
 }: {
     label: string
@@ -17,6 +18,7 @@ export default function Input({
     name: string
     hintMessage?: string
     errorMessage?: string
+    dataTestId?: string
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void
 }) {
     return (
@@ -29,6 +31,7 @@ export default function Input({
                     errorMessage && 'border-danger'
                 }`}
                 onChange={onChange}
+                data-testid={dataTestId}
             />
             {hintMessage && (
                 <div className="text-gray-500 flex items-center space-x-1">
@@ -39,7 +42,12 @@ export default function Input({
             {errorMessage && (
                 <div className="text-danger flex items-center space-x-1">
                     <ExclamationCircleIcon className="w-5 h-5" />
-                    <span className="text-xs">{errorMessage}</span>
+                    <span
+                        className="text-xs"
+                        data-testid={`${dataTestId}-error-message`}
+                    >
+                        {errorMessage}
+                    </span>
                 </div>
             )}
         </div>
