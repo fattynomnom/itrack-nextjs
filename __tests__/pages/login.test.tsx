@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import { AUTH_ERROR_CODES, loginUser } from '../../services/FirebaseAuthService'
+import { AUTH_ERROR_CODES, loginUser } from '../../services/AuthService'
 import '@testing-library/jest-dom'
 import { VALIDATION_MESSAGES } from '../../utils/validation'
 import { act } from 'react-dom/test-utils'
@@ -24,7 +24,7 @@ const setInputValue = (testId: string, value: string) => {
 // #endregion
 
 // #region mocking
-jest.mock('../../services/FirebaseAuthService')
+jest.mock('../../services/AuthService')
 const loginUserMock = loginUser as jest.MockedFunction<typeof loginUser>
 // #endregion
 

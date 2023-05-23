@@ -8,7 +8,7 @@ import {
     getEmailError,
     isRequiredFieldsFilled
 } from '../utils/validation'
-import { AUTH_ERROR_CODES, loginUser } from '../services/FirebaseAuthService'
+import { AUTH_ERROR_CODES, loginUser } from '../services/AuthService'
 import { logError } from '../services/LoggingService'
 import { useRouter } from 'next/router'
 

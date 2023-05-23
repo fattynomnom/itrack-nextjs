@@ -1,9 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import Registration from '../../pages/register'
-import {
-    AUTH_ERROR_CODES,
-    createUser
-} from '../../services/FirebaseAuthService'
+import { AUTH_ERROR_CODES, createUser } from '../../services/AuthService'
 import '@testing-library/jest-dom'
 import { VALIDATION_MESSAGES } from '../../utils/validation'
 import { act } from 'react-dom/test-utils'
@@ -27,7 +24,7 @@ const setInputValue = (testId: string, value: string) => {
 // #endregion
 
 // #region mocking
-jest.mock('../../services/FirebaseAuthService')
+jest.mock('../../services/AuthService')
 const createUserMock = createUser as jest.MockedFunction<typeof createUser>
 // #endregion
 

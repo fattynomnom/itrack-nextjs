@@ -10,7 +10,7 @@ import {
     getMinCharactersError,
     isRequiredFieldsFilled
 } from '../utils/validation'
-import { AUTH_ERROR_CODES, createUser } from '../services/FirebaseAuthService'
+import { AUTH_ERROR_CODES, createUser } from '../services/AuthService'
 import { logError } from '../services/LoggingService'
 import { useRouter } from 'next/router'
 
