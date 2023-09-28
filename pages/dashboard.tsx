@@ -1,7 +1,7 @@
-import { useRouter } from 'next/router'
 import Button from '../components/Button'
-import { logoutUser } from '../services/AuthService'
 import { logError } from '../services/LoggingService'
+import { logoutUser } from '../services/AuthService'
+import { useRouter } from 'next/router'
 
 export default function Dashboard() {
     const router = useRouter()

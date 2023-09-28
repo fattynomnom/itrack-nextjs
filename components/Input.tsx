@@ -1,8 +1,9 @@
-import { ChangeEvent } from 'react'
 import {
     ExclamationCircleIcon,
     InformationCircleIcon
 } from '@heroicons/react/24/solid'
+
+import { ChangeEvent } from 'react'
 
 export default function Input({
     label,

@@ -1,14 +1,15 @@
-import Link from 'next/link'
-import Input from '../components/Input'
-import Button from '../components/Button'
-import SplitPageLayout from '../components/SplitPageLayout'
+import { AUTH_ERROR_CODES, loginUser } from '../services/AuthService'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import {
     VALIDATION_MESSAGES,
     getEmailError,
     isRequiredFieldsFilled
 } from '../utils/validation'
-import { AUTH_ERROR_CODES, loginUser } from '../services/AuthService'
+
+import Button from '../components/Button'
+import Input from '../components/Input'
+import Link from 'next/link'
+import SplitPageLayout from '../components/SplitPageLayout'
 import { logError } from '../services/LoggingService'
 import { useRouter } from 'next/router'
 
