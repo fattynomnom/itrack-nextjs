@@ -16,7 +16,7 @@ export default function Button({
     return (
         <button
             type={type}
-            className="px-4 py-3 bg-primary rounded-lg text-white text-sm font-bold tracking-wider bg-gradient-to-r from-secondary to-primary disabled:opacity-50 flex justify-center"
+            className="px-4 py-3 rounded-lg text-white text-sm font-bold tracking-wider bg-gradient-to-r from-secondary to-primary disabled:opacity-50 flex justify-center"
             onClick={onClick}
             disabled={loading || disabled}
             data-testid={dataTestId}
