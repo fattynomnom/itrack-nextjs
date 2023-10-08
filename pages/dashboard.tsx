@@ -1,22 +1,10 @@
 import { ArcElement, Chart as ChartJS, Tooltip } from 'chart.js'
-import {
-    Checkbox,
-    Popover,
-    PopoverBody,
-    PopoverContent,
-    PopoverTrigger,
-    Slide,
-    useDisclosure
-} from '@chakra-ui/react'
-import {
-    ChevronLeftIcon,
-    ChevronRightIcon,
-    Cog6ToothIcon,
-    Squares2X2Icon
-} from '@heroicons/react/24/solid'
+import { Cog6ToothIcon, Squares2X2Icon } from '@heroicons/react/24/solid'
 
 import Button from '../components/Button'
+import { Checkbox } from '@chakra-ui/react'
 import { Doughnut } from 'react-chartjs-2'
+import SelectCycle from '../components/SelectCycle'
 import { logError } from '../services/LoggingService'
 import { logoutUser } from '../services/AuthService'
 import resolveConfig from 'tailwindcss/resolveConfig'
@@ -80,26 +68,15 @@ const months = [
     'December'
 ]
 
+const years = [2020, 2021, 2022, 2023]
+
 export default function Dashboard() {
     const router = useRouter()
     const pathname = usePathname()
 
     const [frequency, setFrequency] = useState('monthly')
-
-    // #region month select
-    const { isOpen, onToggle, onClose } = useDisclosure()
     const [monthIndex, setMonthIndex] = useState(1)
-    const toggleMonth = (toMonth: -1 | 1) => {
-        const newIndex = monthIndex + toMonth
-        if (newIndex < 0) {
-            setMonthIndex(months.length - 1)
-        } else if (newIndex >= months.length) {
-            setMonthIndex(0)
-        } else {
-            setMonthIndex(newIndex)
-        }
-    }
-    // #endregion
+    const [yearIndex, setYearIndex] = useState(3)
 
     const pages = [
         {
@@ -163,47 +140,21 @@ export default function Dashboard() {
                         </button>
                     </div>
 
-                    <div className="flex items-center cursor-pointer space-x-1">
-                        <ChevronLeftIcon
-                            className="h-5 w-5"
-                            onClick={() => toggleMonth(-1)}
+                    {frequency === 'monthly' && (
+                        <SelectCycle
+                            value={monthIndex}
+                            array={months}
+                            onChanged={setMonthIndex}
                         />
-                        <Popover isOpen={isOpen} onClose={onClose}>
-                            <PopoverTrigger>
-                                <button
-                                    className="rounded-lg px-3 py-2 text-xs hover:bg-bglight"
-                                    onClick={onToggle}
-                                >
-                                    {months[monthIndex]}
-                                </button>
-                            </PopoverTrigger>
-                            <PopoverContent>
-                                <PopoverBody>
-                                    <div className="max-w-[300px] grid grid-cols-3 gap-1">
-                                        {months.map((month, index) => (
-                                            <button
-                                                key={month}
-                                                className={`bg-white hover:bg-bglight rounded-lg px-3 py-2 text-xs ${
-                                                    monthIndex === index &&
-                                                    'opacity-50'
-                                                }`}
-                                                onClick={() => {
-                                                    onToggle()
-                                                    setMonthIndex(index)
-                                                }}
-                                            >
-                                                {month}
-                                            </button>
-                                        ))}
-                                    </div>
-                                </PopoverBody>
-                            </PopoverContent>
-                        </Popover>
-                        <ChevronRightIcon
-                            className="h-5 w-5"
-                            onClick={() => toggleMonth(1)}
+                    )}
+
+                    {frequency === 'yearly' && (
+                        <SelectCycle
+                            value={yearIndex}
+                            array={years}
+                            onChanged={setYearIndex}
                         />
-                    </div>
+                    )}
                 </div>
 
                 <div className="flex-1 space-y-4 overflow-y-auto">
