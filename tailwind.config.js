@@ -17,7 +17,9 @@ module.exports = {
                 successlight: colors.teal[200],
                 success: colors.teal[300],
                 successdark: colors.teal[600],
-                bglight: '#f5f5f5'
+                bglight: colors.gray[100],
+                bgcolor: colors.gray[200],
+                bordercolor: colors.gray[200]
             }
         }
     },

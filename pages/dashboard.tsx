@@ -1,8 +1,21 @@
 import { ArcElement, Chart as ChartJS, Tooltip } from 'chart.js'
-import { Cog6ToothIcon, Squares2X2Icon } from '@heroicons/react/24/solid'
+import {
+    Checkbox,
+    Popover,
+    PopoverBody,
+    PopoverContent,
+    PopoverTrigger,
+    Slide,
+    useDisclosure
+} from '@chakra-ui/react'
+import {
+    ChevronLeftIcon,
+    ChevronRightIcon,
+    Cog6ToothIcon,
+    Squares2X2Icon
+} from '@heroicons/react/24/solid'
 
 import Button from '../components/Button'
-import { Checkbox } from '@chakra-ui/react'
 import { Doughnut } from 'react-chartjs-2'
 import { logError } from '../services/LoggingService'
 import { logoutUser } from '../services/AuthService'
@@ -10,6 +23,7 @@ import resolveConfig from 'tailwindcss/resolveConfig'
 import tailwindConfig from '../tailwind.config'
 import { usePathname } from 'next/navigation'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 ChartJS.register(ArcElement, Tooltip)
 
@@ -45,9 +59,47 @@ const data = {
     ]
 }
 
+const transactions = [
+    { name: 'Water bill', date: '11/11/2023', amount: '123.10' },
+    { name: 'Village Park', date: '11/11/2023', amount: '56.10' },
+    { name: 'Movie', date: '11/11/2023', amount: '22' }
+]
+
+const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+]
+
 export default function Dashboard() {
     const router = useRouter()
     const pathname = usePathname()
+
+    const [frequency, setFrequency] = useState('monthly')
+
+    // #region month select
+    const { isOpen, onToggle, onClose } = useDisclosure()
+    const [monthIndex, setMonthIndex] = useState(1)
+    const toggleMonth = (toMonth: -1 | 1) => {
+        const newIndex = monthIndex + toMonth
+        if (newIndex < 0) {
+            setMonthIndex(months.length - 1)
+        } else if (newIndex >= months.length) {
+            setMonthIndex(0)
+        } else {
+            setMonthIndex(newIndex)
+        }
+    }
+    // #endregion
 
     const pages = [
         {
@@ -72,14 +124,14 @@ export default function Dashboard() {
     }
 
     return (
-        <main className="flex h-full bg-bglight">
+        <main className="flex h-full">
             {/* <Button label="Logout" onClick={logoutAndRedirect} /> */}
-            <nav className="py-7 pl-7">
-                <ul className="nav-list bg-white rounded-lg p-7 space-y-3 h-full">
+            <nav>
+                <ul className="nav-list bg-bglight p-10 space-y-3 h-full min-w-[300px] border-r border-bordercolor">
                     {pages.map(page => (
                         <li
                             key={page.url}
-                            className={pathname === page.url && 'bg-bglight'}
+                            className={pathname === page.url && 'bg-bgcolor'}
                         >
                             {page.icon}
                             <span>{page.label}</span>
@@ -88,79 +140,206 @@ export default function Dashboard() {
                 </ul>
             </nav>
 
-            <div className="flex-1 p-7 space-y-4 overflow-y-auto">
-                <div className="flex space-x-4">
-                    <div className="card space-y-2">
-                        <div>Income this month</div>
-                        <div className="amount-container">
-                            <p>$7272</p>
-                            <div className="tag danger">+50%</div>
-                        </div>
+            <div className="flex flex-col flex-1">
+                <div className="border-b border-bordercolor px-7 py-4 space-x-7 flex items-center">
+                    <div className="button-toggle-container rounded-lg p-1 w-fit space-x-2">
+                        <button
+                            className={`button-toggle ${
+                                frequency === 'monthly'
+                                    ? 'bg-white'
+                                    : 'inactive'
+                            }`}
+                            onClick={() => setFrequency('monthly')}
+                        >
+                            Monthly
+                        </button>
+                        <button
+                            className={`button-toggle ${
+                                frequency === 'yearly' ? 'bg-white' : 'inactive'
+                            }`}
+                            onClick={() => setFrequency('yearly')}
+                        >
+                            Yearly
+                        </button>
                     </div>
-                    <div className="card space-y-2">
-                        <div>Expense this month</div>
-                        <div className="amount-container">
-                            <p>$7272</p>
-                            <div className="tag success">+50%</div>
-                        </div>
-                    </div>
-                    <div className="card space-y-2">
-                        <div>Savings this month</div>
-                        <div className="amount-container">
-                            <p>$7272</p>
-                            <div className="tag danger">+50%</div>
-                        </div>
+
+                    <div className="flex items-center cursor-pointer space-x-1">
+                        <ChevronLeftIcon
+                            className="h-5 w-5"
+                            onClick={() => toggleMonth(-1)}
+                        />
+                        <Popover isOpen={isOpen} onClose={onClose}>
+                            <PopoverTrigger>
+                                <button
+                                    className="rounded-lg px-3 py-2 text-xs hover:bg-bglight"
+                                    onClick={onToggle}
+                                >
+                                    {months[monthIndex]}
+                                </button>
+                            </PopoverTrigger>
+                            <PopoverContent>
+                                <PopoverBody>
+                                    <div className="max-w-[300px] grid grid-cols-3 gap-1">
+                                        {months.map((month, index) => (
+                                            <button
+                                                key={month}
+                                                className={`bg-white hover:bg-bglight rounded-lg px-3 py-2 text-xs ${
+                                                    monthIndex === index &&
+                                                    'opacity-50'
+                                                }`}
+                                                onClick={() => {
+                                                    onToggle()
+                                                    setMonthIndex(index)
+                                                }}
+                                            >
+                                                {month}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </PopoverBody>
+                            </PopoverContent>
+                        </Popover>
+                        <ChevronRightIcon
+                            className="h-5 w-5"
+                            onClick={() => toggleMonth(1)}
+                        />
                     </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                    <div className="card space-y-5">
-                        <div className="font-semibold">Expense breakdown</div>
-                        <div className="flex space-x-5">
-                            <div className="max-h-[300px]">
-                                <Doughnut data={data} />
+                <div className="flex-1 space-y-4 overflow-y-auto">
+                    <div className="grid grid-cols-12 divide-x divide-bordercolor">
+                        <div className="col-span-8 p-7">
+                            <div className="grid grid-cols-3 gap-5">
+                                <div className="card space-y-2">
+                                    <div>Income this month</div>
+                                    <div className="amount-container">
+                                        <p>$7272</p>
+                                        <div className="tag danger">+50%</div>
+                                    </div>
+                                </div>
+
+                                <div className="card space-y-2">
+                                    <div>Expense this month</div>
+                                    <div className="amount-container">
+                                        <p>$7272</p>
+                                        <div className="tag success">+50%</div>
+                                    </div>
+                                </div>
+
+                                <div className="card space-y-2">
+                                    <div>Savings this month</div>
+                                    <div className="amount-container">
+                                        <p>$7272</p>
+                                        <div className="tag danger">+50%</div>
+                                    </div>
+                                </div>
+
+                                <div className="card col-span-full space-y-5">
+                                    <div className="font-semibold">
+                                        Expense breakdown
+                                    </div>
+                                    <div className="flex space-x-5">
+                                        <div className="max-h-[300px]">
+                                            <Doughnut data={data} />
+                                        </div>
+                                        <ul className="flex-1 px-5 divide-y divide-bglight flex flex-col justify-center">
+                                            {categories.map(
+                                                ({
+                                                    label,
+                                                    percentage,
+                                                    color
+                                                }) => (
+                                                    <li
+                                                        key={label}
+                                                        className="py-3 flex justify-between"
+                                                    >
+                                                        <div className="flex space-x-3">
+                                                            <div
+                                                                className="w-5 h-5 rounded-full"
+                                                                style={{
+                                                                    backgroundColor:
+                                                                        color as string
+                                                                }}
+                                                            />
+                                                            <span>{label}</span>
+                                                        </div>
+                                                        <span>
+                                                            $500 ({percentage}%)
+                                                        </span>
+                                                    </li>
+                                                )
+                                            )}
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div className="col-span-full grid grid-cols-2 gap-5">
+                                    <div className="card space-y-5">
+                                        <div className="font-semibold">
+                                            Monthly commitments
+                                        </div>
+                                        <ul className="flex-1 divide-y divide-bglight flex flex-col justify-center">
+                                            {categories.map(
+                                                ({ label, percentage }) => (
+                                                    <li
+                                                        key={label}
+                                                        className="py-3 flex justify-between"
+                                                    >
+                                                        <div className="flex space-x-3">
+                                                            <Checkbox
+                                                                defaultChecked
+                                                            />
+                                                            <span>{label}</span>
+                                                        </div>
+                                                        <span>
+                                                            $500 ({percentage}%)
+                                                        </span>
+                                                    </li>
+                                                )
+                                            )}
+                                        </ul>
+                                    </div>
+
+                                    <div className="card space-y-5">
+                                        <div className="font-semibold">
+                                            Installments
+                                        </div>
+                                        <ul className="flex-1 divide-y divide-bglight flex flex-col justify-center">
+                                            {categories.map(({ label }) => (
+                                                <li
+                                                    key={label}
+                                                    className="py-3 flex justify-between"
+                                                >
+                                                    <span>{label}</span>
+                                                    <span>
+                                                        $4500 (14 / 16 months)
+                                                    </span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                            <ul className="flex-1 px-5 divide-y divide-bglight flex flex-col justify-center">
-                                {categories.map(
-                                    ({ label, percentage, color }) => (
-                                        <li
-                                            key={label}
-                                            className="py-3 flex justify-between"
-                                        >
-                                            <div className="flex space-x-3">
-                                                <div
-                                                    className="w-5 h-5 rounded-full"
-                                                    style={{
-                                                        backgroundColor:
-                                                            color as string
-                                                    }}
-                                                />
-                                                <span>{label}</span>
+                        </div>
+                        <div className="col-span-4 p-7 space-y-3">
+                            <div className="font-semibold">Transactions</div>
+                            <ul className="space-y-4 divide-y divide-bglight">
+                                {transactions.map(transaction => (
+                                    <li
+                                        key={`${transaction.name}-${transaction.date}`}
+                                        className="flex items-center pt-4"
+                                    >
+                                        <div className="flex-1">
+                                            <div className="font-semibold">
+                                                {transaction.name}
                                             </div>
-                                            <span>$500 ({percentage}%)</span>
-                                        </li>
-                                    )
-                                )}
+                                            <div>{transaction.date}</div>
+                                        </div>
+                                        <div>${transaction.amount}</div>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
-                    </div>
-
-                    <div className="card space-y-5">
-                        <div className="font-semibold">Monthly commitments</div>
-                        <ul className="flex-1 divide-y divide-bglight flex flex-col justify-center">
-                            {categories.map(({ label, percentage, color }) => (
-                                <li
-                                    key={label}
-                                    className="py-3 flex justify-between"
-                                >
-                                    <div className="flex space-x-3">
-                                        <Checkbox defaultChecked />
-                                        <span>{label}</span>
-                                    </div>
-                                    <span>$500 ({percentage}%)</span>
-                                </li>
-                            ))}
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -180,8 +359,17 @@ export default function Dashboard() {
                     @apply flex items-center gap-3 cursor-pointer px-5 py-3 rounded-lg font-semibold hover:opacity-50;
                 }
 
+                .button-toggle {
+                    @apply rounded-lg px-3 py-2 text-xs;
+                }
+
+                .button-toggle-container,
+                .button-toggle .inactive {
+                    @apply bg-bglight hover:bg-bgcolor;
+                }
+
                 .card {
-                    @apply flex-1 rounded-lg p-7 bg-white;
+                    @apply flex-1 rounded-lg p-7 bg-white border border-bordercolor;
                 }
 
                 .amount-container {
