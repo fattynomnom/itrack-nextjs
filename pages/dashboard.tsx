@@ -1,6 +1,16 @@
+import {
+    BadgeDelta,
+    Card,
+    DonutChart,
+    Metric,
+    Subtitle,
+    Text,
+    Title
+} from '@tremor/react'
+
 import Button from '../components/Button'
 import { Checkbox } from '@chakra-ui/react'
-import { DonutChart } from '@tremor/react'
+import MetricsCard from '../components/MetricsCard'
 import TopNav from '../components/TopNav'
 import { logError } from '../services/LoggingService'
 import { logoutUser } from '../services/AuthService'
@@ -52,38 +62,31 @@ export default function Dashboard() {
             <TopNav />
 
             <div className="space-y-4">
-                <div className="grid grid-cols-12 divide-x divide-bordercolor">
+                <div className="grid grid-cols-12 divide-x">
                     <div className="col-span-8 p-7">
                         <div className="grid grid-cols-3 gap-5">
-                            <div className="card space-y-2">
-                                <div>Income this month</div>
-                                <div className="amount-container">
-                                    <p>$7272</p>
-                                    <div className="tag danger">+50%</div>
-                                </div>
-                            </div>
+                            <MetricsCard
+                                title="Income"
+                                amount={7879}
+                                increment={50}
+                                color="blue"
+                            />
+                            <MetricsCard
+                                title="Expenses"
+                                amount={7879}
+                                increment={-23.4}
+                                color="indigo"
+                            />
+                            <MetricsCard
+                                title="Savings"
+                                amount={7879}
+                                increment={8.2}
+                                color="teal"
+                            />
 
-                            <div className="card space-y-2">
-                                <div>Expense this month</div>
-                                <div className="amount-container">
-                                    <p>$7272</p>
-                                    <div className="tag success">+50%</div>
-                                </div>
-                            </div>
-
-                            <div className="card space-y-2">
-                                <div>Savings this month</div>
-                                <div className="amount-container">
-                                    <p>$7272</p>
-                                    <div className="tag danger">+50%</div>
-                                </div>
-                            </div>
-
-                            <div className="card col-span-full space-y-5">
-                                <div className="font-semibold">
-                                    Expense breakdown
-                                </div>
-                                <div className="flex space-x-5">
+                            <Card className="col-span-full">
+                                <Title>Expenses breakdown</Title>
+                                <div className="flex space-x-5 mt-5">
                                     <div className="h-44 w-44">
                                         {/* <Doughnut data={data} /> */}
                                         <DonutChart
@@ -96,7 +99,7 @@ export default function Dashboard() {
                                             }
                                         />
                                     </div>
-                                    <ul className="flex-1 px-5 divide-y divide-bglight flex flex-col justify-center">
+                                    <ul className="flex-1 px-5 divide-y flex flex-col justify-center">
                                         {categories.map(
                                             ({ label, amount, color }) => (
                                                 <li
@@ -111,22 +114,20 @@ export default function Dashboard() {
                                                                     color as string
                                                             }}
                                                         />
-                                                        <span>{label}</span>
+                                                        <Text>{label}</Text>
                                                     </div>
-                                                    <span>${amount} (10%)</span>
+                                                    <Text>${amount} (10%)</Text>
                                                 </li>
                                             )
                                         )}
                                     </ul>
                                 </div>
-                            </div>
+                            </Card>
 
                             <div className="col-span-full grid grid-cols-2 gap-5">
-                                <div className="card space-y-5">
-                                    <div className="font-semibold">
-                                        Monthly commitments
-                                    </div>
-                                    <ul className="flex-1 divide-y divide-bglight flex flex-col justify-center">
+                                <Card>
+                                    <Title>Monthly commitments</Title>
+                                    <ul className="flex-1 divide-y flex flex-col justify-center mt-5">
                                         {categories.map(({ label, amount }) => (
                                             <li
                                                 key={label}
@@ -134,48 +135,44 @@ export default function Dashboard() {
                                             >
                                                 <div className="flex space-x-3">
                                                     <Checkbox defaultChecked />
-                                                    <span>{label}</span>
+                                                    <Text>{label}</Text>
                                                 </div>
-                                                <span>${amount}</span>
+                                                <Text>${amount}</Text>
                                             </li>
                                         ))}
                                     </ul>
-                                </div>
+                                </Card>
 
-                                <div className="card space-y-5">
-                                    <div className="font-semibold">
-                                        Installments
-                                    </div>
-                                    <ul className="flex-1 divide-y divide-bglight flex flex-col justify-center">
+                                <Card>
+                                    <Title>Installments</Title>
+                                    <ul className="flex-1 divide-y flex flex-col justify-center mt-5">
                                         {categories.map(({ label }) => (
                                             <li
                                                 key={label}
                                                 className="py-3 flex justify-between"
                                             >
-                                                <span>{label}</span>
-                                                <span>
+                                                <Text>{label}</Text>
+                                                <Text>
                                                     $4500 (14 / 16 months)
-                                                </span>
+                                                </Text>
                                             </li>
                                         ))}
                                     </ul>
-                                </div>
+                                </Card>
                             </div>
                         </div>
                     </div>
                     <div className="col-span-4 p-7 space-y-3">
-                        <div className="font-semibold">Transactions</div>
-                        <ul className="space-y-4 divide-y divide-bglight">
+                        <Title>Transactions</Title>
+                        <ul className="space-y-4 divide-y">
                             {transactions.map(transaction => (
                                 <li
                                     key={`${transaction.name}-${transaction.date}`}
                                     className="flex items-center pt-4"
                                 >
                                     <div className="flex-1">
-                                        <div className="font-semibold">
-                                            {transaction.name}
-                                        </div>
-                                        <div>{transaction.date}</div>
+                                        <Text>{transaction.name}</Text>
+                                        <Subtitle>{transaction.date}</Subtitle>
                                     </div>
                                     <div>${transaction.amount}</div>
                                 </li>
@@ -184,32 +181,6 @@ export default function Dashboard() {
                     </div>
                 </div>
             </div>
-
-            <style jsx>{`
-                .card {
-                    @apply flex-1 rounded-lg p-7 bg-white border border-bordercolor;
-                }
-
-                .amount-container {
-                    @apply flex items-center space-x-3;
-                }
-
-                .amount-container > p {
-                    @apply text-2xl font-semibold;
-                }
-
-                .amount-container > .tag {
-                    @apply rounded-lg px-2 py-1 text-xs font-semibold h-fit;
-                }
-
-                .amount-container > .tag.success {
-                    @apply bg-success text-successdark;
-                }
-
-                .amount-container > .tag.danger {
-                    @apply bg-danger text-dangerdark;
-                }
-            `}</style>
         </div>
     )
 }

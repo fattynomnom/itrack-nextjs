@@ -21,12 +21,15 @@ const tremorColors = {
         border: {
             DEFAULT: '#e5e7eb' // gray-200
         },
+        divide: {
+            DEFAULT: '#e5e7eb' // gray-200
+        },
         ring: {
             DEFAULT: '#e5e7eb' // gray-200
         },
         content: {
             subtle: '#9ca3af', // gray-400
-            DEFAULT: '#6b7280', // gray-500
+            DEFAULT: colors.gray[600],
             emphasis: '#374151', // gray-700
             strong: '#111827', // gray-900
             inverted: '#ffffff' // white
@@ -49,6 +52,9 @@ const tremorColors = {
             emphasis: '#d1d5db' // gray-300
         },
         border: {
+            DEFAULT: '#1f2937' // gray-800
+        },
+        divide: {
             DEFAULT: '#1f2937' // gray-800
         },
         ring: {
@@ -99,9 +105,7 @@ const themeColors = {
     successlight: colors.teal[200],
     success: colors.teal[300],
     successdark: colors.teal[600],
-    bglight: colors.gray[100],
-    bgcolor: colors.gray[200],
-    bordercolor: colors.gray[200]
+    bgcolor: colors.gray[200]
 }
 // #endregion
 

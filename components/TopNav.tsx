@@ -25,8 +25,12 @@ export default function TopNav() {
     const [yearIndex, setYearIndex] = useState(3)
 
     return (
-        <div className="border-b border-bordercolor px-7 py-4 space-x-7 flex items-center">
+        <div className="border-b px-7 py-4 space-x-7 flex items-center">
             <ButtonToggle
+                values={[
+                    { label: 'Monthly', buttonValue: 'monthly' },
+                    { label: 'Yearly', buttonValue: 'yearly' }
+                ]}
                 value={frequency}
                 onChanged={value => setFrequency(value as string)}
             />

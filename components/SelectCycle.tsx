@@ -7,6 +7,8 @@ import {
     useDisclosure
 } from '@chakra-ui/react'
 
+import { Text } from '@tremor/react'
+
 export default function SelectCycle({
     value,
     array,
@@ -38,10 +40,10 @@ export default function SelectCycle({
             <Popover isOpen={isOpen} onClose={onClose}>
                 <PopoverTrigger>
                     <button
-                        className="rounded-lg px-3 py-2 text-xs hover:bg-bglight"
+                        className="rounded-lg px-3 py-2 hover:bg-tremor-background-subtle"
                         onClick={onToggle}
                     >
-                        {array[value]}
+                        <Text>{array[value]}</Text>
                     </button>
                 </PopoverTrigger>
                 <PopoverContent>
@@ -50,7 +52,7 @@ export default function SelectCycle({
                             {array.map((text, index) => (
                                 <button
                                     key={text}
-                                    className={`bg-white hover:bg-bglight rounded-lg px-3 py-2 text-xs ${
+                                    className={`bg-tremor-background hover:bg-tremor-background-subtle rounded-lg px-3 py-2 text-xs ${
                                         value === index && 'opacity-50'
                                     }`}
                                     onClick={() => {
@@ -58,7 +60,7 @@ export default function SelectCycle({
                                         onChanged(index)
                                     }}
                                 >
-                                    {text}
+                                    <Text>{text}</Text>
                                 </button>
                             ))}
                         </div>
