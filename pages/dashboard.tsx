@@ -1,8 +1,10 @@
 import {
     BadgeDelta,
     Card,
+    Color,
     DonutChart,
     Metric,
+    ProgressBar,
     Subtitle,
     Text,
     Title
@@ -24,17 +26,20 @@ const categories = [
     {
         label: 'Food',
         amount: 987,
-        color: themeConfig.theme.colors.primary
+        color: themeConfig.theme.colors.primary,
+        colorName: 'blue'
     },
     {
         label: 'Housing',
         amount: 3241,
-        color: themeConfig.theme.colors.secondary
+        color: themeConfig.theme.colors.secondary,
+        colorName: 'indigo'
     },
     {
         label: 'Necessities',
         amount: 539,
-        color: themeConfig.theme.colors.successlight
+        color: themeConfig.theme.colors.successlight,
+        colorName: 'teal'
     }
 ]
 
@@ -95,7 +100,7 @@ export default function Dashboard() {
                                             index="label"
                                             colors={['blue', 'indigo', 'teal']}
                                             valueFormatter={(amount: number) =>
-                                                `$${amount}`
+                                                `$ ${amount}`
                                             }
                                         />
                                     </div>
@@ -116,7 +121,9 @@ export default function Dashboard() {
                                                         />
                                                         <Text>{label}</Text>
                                                     </div>
-                                                    <Text>${amount} (10%)</Text>
+                                                    <Text>
+                                                        $ {amount} (10%)
+                                                    </Text>
                                                 </li>
                                             )
                                         )}
@@ -137,7 +144,7 @@ export default function Dashboard() {
                                                     <Checkbox defaultChecked />
                                                     <Text>{label}</Text>
                                                 </div>
-                                                <Text>${amount}</Text>
+                                                <Text>$ {amount}</Text>
                                             </li>
                                         ))}
                                     </ul>
@@ -145,18 +152,31 @@ export default function Dashboard() {
 
                                 <Card>
                                     <Title>Installments</Title>
-                                    <ul className="flex-1 divide-y flex flex-col justify-center mt-5">
-                                        {categories.map(({ label }) => (
-                                            <li
-                                                key={label}
-                                                className="py-3 flex justify-between"
-                                            >
-                                                <Text>{label}</Text>
-                                                <Text>
-                                                    $4500 (14 / 16 months)
-                                                </Text>
-                                            </li>
-                                        ))}
+                                    <ul className="flex-1 divide-y flex flex-col justify-center mt-2">
+                                        {categories.map(
+                                            ({ label, colorName }) => (
+                                                <li
+                                                    key={label}
+                                                    className="pt-3 pb-4"
+                                                >
+                                                    <Title>{label}</Title>
+                                                    <div className="flex justify-between mb-2">
+                                                        <Text>
+                                                            $ 9012 / month
+                                                            &bull; 14 / 16
+                                                            months
+                                                        </Text>
+                                                        <Text>$ 20000</Text>
+                                                    </div>
+                                                    <ProgressBar
+                                                        value={(14 / 16) * 100}
+                                                        color={
+                                                            colorName as Color
+                                                        }
+                                                    />
+                                                </li>
+                                            )
+                                        )}
                                     </ul>
                                 </Card>
                             </div>
@@ -174,7 +194,7 @@ export default function Dashboard() {
                                         <Text>{transaction.name}</Text>
                                         <Subtitle>{transaction.date}</Subtitle>
                                     </div>
-                                    <div>${transaction.amount}</div>
+                                    <div>$ {transaction.amount}</div>
                                 </li>
                             ))}
                         </ul>
