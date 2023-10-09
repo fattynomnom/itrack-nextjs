@@ -1,4 +1,5 @@
 import { defineStyleConfig, extendTheme } from '@chakra-ui/react'
+
 import tailwindConfig from '../tailwind.config'
 
 // #region color scheme
@@ -20,7 +21,7 @@ const Checkbox = defineStyleConfig({
 
 export const theme = extendTheme({
     fonts: {
-        body: 'Montserrat, sans serif'
+        body: 'Inter, sans serif'
     },
     colors,
     components: {
