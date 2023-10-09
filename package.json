@@ -13,12 +13,11 @@
         "@emotion/react": "^11.11.1",
         "@emotion/styled": "^11.11.0",
         "@heroicons/react": "^2.0.18",
-        "chart.js": "^4.4.0",
+        "@tremor/react": "^3.8.2",
         "firebase": "^9.19.1",
         "framer-motion": "^10.16.4",
         "next": "latest",
         "react": "18.2.0",
-        "react-chartjs-2": "^5.2.0",
         "react-dom": "18.2.0",
         "styled-jsx-plugin-postcss": "^4.0.1"
     },

@@ -1,49 +1,32 @@
-import { ArcElement, Chart as ChartJS, Tooltip } from 'chart.js'
-
 import Button from '../components/Button'
 import { Checkbox } from '@chakra-ui/react'
-import { Doughnut } from 'react-chartjs-2'
+import { DonutChart } from '@tremor/react'
 import TopNav from '../components/TopNav'
 import { logError } from '../services/LoggingService'
 import { logoutUser } from '../services/AuthService'
 import resolveConfig from 'tailwindcss/resolveConfig'
 import tailwindConfig from '../tailwind.config'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
-
-ChartJS.register(ArcElement, Tooltip)
 
 const themeConfig = resolveConfig(tailwindConfig)
 
 const categories = [
     {
         label: 'Food',
-        percentage: 21,
+        amount: 987,
         color: themeConfig.theme.colors.primary
     },
     {
         label: 'Housing',
-        percentage: 19,
+        amount: 3241,
         color: themeConfig.theme.colors.secondary
     },
     {
         label: 'Necessities',
-        percentage: 60,
+        amount: 539,
         color: themeConfig.theme.colors.successlight
     }
 ]
-
-const data = {
-    labels: categories.map(({ label }) => label),
-    datasets: [
-        {
-            label: '%',
-            data: categories.map(({ percentage }) => percentage),
-            backgroundColor: categories.map(({ color }) => color),
-            borderColor: categories.map(({ color }) => color)
-        }
-    ]
-}
 
 const transactions = [
     { name: 'Water bill', date: '11/11/2023', amount: '123.10' },
@@ -101,12 +84,21 @@ export default function Dashboard() {
                                     Expense breakdown
                                 </div>
                                 <div className="flex space-x-5">
-                                    <div className="max-h-[300px]">
-                                        <Doughnut data={data} />
+                                    <div className="h-44 w-44">
+                                        {/* <Doughnut data={data} /> */}
+                                        <DonutChart
+                                            data={categories}
+                                            category="amount"
+                                            index="label"
+                                            colors={['blue', 'indigo', 'teal']}
+                                            valueFormatter={(amount: number) =>
+                                                `$${amount}`
+                                            }
+                                        />
                                     </div>
                                     <ul className="flex-1 px-5 divide-y divide-bglight flex flex-col justify-center">
                                         {categories.map(
-                                            ({ label, percentage, color }) => (
+                                            ({ label, amount, color }) => (
                                                 <li
                                                     key={label}
                                                     className="py-3 flex justify-between"
@@ -121,9 +113,7 @@ export default function Dashboard() {
                                                         />
                                                         <span>{label}</span>
                                                     </div>
-                                                    <span>
-                                                        $500 ({percentage}%)
-                                                    </span>
+                                                    <span>${amount} (10%)</span>
                                                 </li>
                                             )
                                         )}
@@ -137,24 +127,18 @@ export default function Dashboard() {
                                         Monthly commitments
                                     </div>
                                     <ul className="flex-1 divide-y divide-bglight flex flex-col justify-center">
-                                        {categories.map(
-                                            ({ label, percentage }) => (
-                                                <li
-                                                    key={label}
-                                                    className="py-3 flex justify-between"
-                                                >
-                                                    <div className="flex space-x-3">
-                                                        <Checkbox
-                                                            defaultChecked
-                                                        />
-                                                        <span>{label}</span>
-                                                    </div>
-                                                    <span>
-                                                        $500 ({percentage}%)
-                                                    </span>
-                                                </li>
-                                            )
-                                        )}
+                                        {categories.map(({ label, amount }) => (
+                                            <li
+                                                key={label}
+                                                className="py-3 flex justify-between"
+                                            >
+                                                <div className="flex space-x-3">
+                                                    <Checkbox defaultChecked />
+                                                    <span>{label}</span>
+                                                </div>
+                                                <span>${amount}</span>
+                                            </li>
+                                        ))}
                                     </ul>
                                 </div>
 
