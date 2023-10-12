@@ -439,17 +439,16 @@ export default function Expenses() {
             </div>
 
             <style jsx global>{`
-                .recharts-bar-rectangle:nth-child(3n-2) {
-                    @apply fill-primary;
-                }
-
-                .recharts-bar-rectangle:nth-child(3n-1) {
-                    @apply fill-secondary;
-                }
-
-                .recharts-bar-rectangle:nth-child(3n-0) {
-                    @apply fill-successlight;
-                }
+                ${categories
+                    .map(
+                        (
+                            { color },
+                            index
+                        ) => `.recharts-bar-rectangle:nth-child(${index + 1}) {
+                    fill: ${color};
+                }`
+                    )
+                    .join('\n')}
 
                 .recharts-legend-wrapper {
                     @apply hidden;
