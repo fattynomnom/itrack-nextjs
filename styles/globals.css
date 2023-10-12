@@ -93,3 +93,21 @@ small {
 a {
     @apply text-primary;
 }
+
+/* region chakra drawer */
+.chakra-slide {
+    @apply rounded-l-tremor-default divide-y max-w-[30%] !important;
+}
+
+.chakra-modal__header {
+    @apply p-7 pb-5 !important;
+}
+
+.chakra-modal__body {
+    @apply p-7 pt-3 !important;
+}
+
+/* region tremor input */
+.tremor-TextInput-input {
+    @apply placeholder:text-tremor-content-subtle !important;
+}

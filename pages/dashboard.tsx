@@ -1,9 +1,7 @@
 import {
-    BadgeDelta,
     Card,
     Color,
     DonutChart,
-    Metric,
     ProgressBar,
     Subtitle,
     Text,
@@ -93,7 +91,6 @@ export default function Dashboard() {
                                 <Title>Expenses breakdown</Title>
                                 <div className="flex space-x-5 mt-5">
                                     <div className="h-44 w-44">
-                                        {/* <Doughnut data={data} /> */}
                                         <DonutChart
                                             data={categories}
                                             category="amount"
@@ -121,7 +118,7 @@ export default function Dashboard() {
                                                         />
                                                         <Text>{label}</Text>
                                                     </div>
-                                                    <Text>
+                                                    <Text className="tabular-nums">
                                                         $ {amount} (10%)
                                                     </Text>
                                                 </li>
@@ -144,7 +141,9 @@ export default function Dashboard() {
                                                     <Checkbox defaultChecked />
                                                     <Text>{label}</Text>
                                                 </div>
-                                                <Text>$ {amount}</Text>
+                                                <Text className="tabular-nums">
+                                                    $ {amount}
+                                                </Text>
                                             </li>
                                         ))}
                                     </ul>
@@ -166,7 +165,9 @@ export default function Dashboard() {
                                                             &bull; 14 / 16
                                                             months
                                                         </Text>
-                                                        <Text>$ 20000</Text>
+                                                        <Text className="tabular-nums">
+                                                            $ 20000
+                                                        </Text>
                                                     </div>
                                                     <ProgressBar
                                                         value={(14 / 16) * 100}
@@ -194,7 +195,9 @@ export default function Dashboard() {
                                         <Text>{transaction.name}</Text>
                                         <Subtitle>{transaction.date}</Subtitle>
                                     </div>
-                                    <div>$ {transaction.amount}</div>
+                                    <div className="tabular-nums">
+                                        $ {transaction.amount}
+                                    </div>
                                 </li>
                             ))}
                         </ul>

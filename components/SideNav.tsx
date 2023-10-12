@@ -6,6 +6,7 @@ import {
 
 import { Title } from '@tremor/react'
 import { usePathname } from 'next/navigation'
+import { useRouter } from 'next/router'
 
 const pages = [
     {
@@ -33,6 +34,7 @@ const pages = [
 
 export default function SideNav() {
     const pathname = usePathname()
+    const router = useRouter()
 
     return (
         <nav>
@@ -41,6 +43,7 @@ export default function SideNav() {
                     <li
                         key={page.url}
                         className={pathname === page.url && 'bg-bgcolor'}
+                        onClick={() => router.push(page.url)}
                     >
                         {page.icon}
                         <Title>{page.label}</Title>

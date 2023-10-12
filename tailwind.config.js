@@ -8,7 +8,7 @@ const tremorColors = {
             faint: '#eff6ff', // blue-50
             muted: '#bfdbfe', // blue-200
             subtle: '#60a5fa', // blue-400
-            DEFAULT: '#3b82f6', // blue-500
+            DEFAULT: colors.blue[400],
             emphasis: '#1d4ed8', // blue-700
             inverted: '#ffffff' // white
         },
@@ -107,11 +107,39 @@ const themeColors = {
     successdark: colors.teal[600],
     bgcolor: colors.gray[200]
 }
+const defaultColors = {
+    // overriding colors used in tremor
+    orange: {
+        500: colors.orange[200]
+    },
+    yellow: {
+        500: colors.yellow[200]
+    },
+    teal: {
+        500: themeColors.successlight
+    },
+    lime: {
+        500: colors.lime[200]
+    },
+    blue: {
+        500: themeColors.primary
+    },
+    indigo: {
+        500: themeColors.secondary
+    },
+    fuchsia: {
+        500: colors.fuchsia[200]
+    },
+    rose: {
+        500: colors.rose[200]
+    }
+}
 // #endregion
 
 /** @type {import('tailwindcss').Config} */
 /* eslint-disable max-len */
 module.exports = {
+    defaultColors,
     content: [
         './pages/**/*.{js,ts,jsx,tsx}',
         './components/**/*.{js,ts,jsx,tsx}',
@@ -125,16 +153,7 @@ module.exports = {
             colors: {
                 ...tremorColors,
                 ...themeColors,
-                // overriding colors used in tremor
-                blue: {
-                    500: themeColors.primary
-                },
-                indigo: {
-                    500: themeColors.secondary
-                },
-                teal: {
-                    500: themeColors.successlight
-                }
+                ...defaultColors
             },
             boxShadow: tremorBoxShadows,
             borderRadius: tremorBorderRadius,
