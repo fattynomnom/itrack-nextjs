@@ -1,4 +1,12 @@
 import {
+    AdjustmentsHorizontalIcon,
+    ChartBarIcon,
+    ChartPieIcon,
+    ChevronDownIcon,
+    ChevronUpIcon,
+    PencilIcon
+} from '@heroicons/react/24/solid'
+import {
     Badge,
     BarChart,
     Button,
@@ -6,6 +14,7 @@ import {
     Color,
     DatePicker,
     DonutChart,
+    Icon,
     Subtitle,
     Tab,
     TabGroup,
@@ -21,13 +30,6 @@ import {
     Title
 } from '@tremor/react'
 import {
-    ChartBarIcon,
-    ChartPieIcon,
-    ChevronDownIcon,
-    ChevronUpIcon,
-    PencilIcon
-} from '@heroicons/react/24/solid'
-import {
     Drawer,
     DrawerBody,
     DrawerContent,
@@ -37,6 +39,7 @@ import {
     useDisclosure
 } from '@chakra-ui/react'
 
+import BadgeToggle from '../components/BadgeToggle'
 import ButtonToggle from '../components/ButtonToggle'
 import TopNav from '../components/TopNav'
 import resolveConfig from 'tailwindcss/resolveConfig'
@@ -130,7 +133,13 @@ export default function Expenses() {
     const [chart, setChart] = useState('donut')
     const [categoryType, setCategoryType] = useState('wants')
     const [color, setColor] = useState('orange')
+    const [filters, setFilters] = useState<string[]>([])
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const {
+        isOpen: isFilterOpen,
+        onOpen: onFilterOpen,
+        onClose: onFilterClose
+    } = useDisclosure()
     const {
         isOpen: isAddOpen,
         onOpen: onAddOpen,
@@ -285,8 +294,55 @@ export default function Expenses() {
                 <div className="p-7 space-y-3 h-full">
                     <div className="flex items-center justify-between space-x-4">
                         <Title>Transactions</Title>
-                        <DatePicker className="max-w-[280px]" />
+                        <Icon
+                            icon={AdjustmentsHorizontalIcon}
+                            variant="simple"
+                            tooltip="Filters"
+                            size="md"
+                            className="cursor-pointer"
+                            onClick={() =>
+                                isFilterOpen ? onFilterClose() : onFilterOpen()
+                            }
+                        />
                     </div>
+                    <SlideFade in={isFilterOpen}>
+                        {isFilterOpen && (
+                            <Card>
+                                <div className="space-y-3">
+                                    <DatePicker />
+                                    <div className="flex flex-wrap space-x-1">
+                                        {categories.map(
+                                            ({ label, colorName }) => (
+                                                <BadgeToggle
+                                                    key={`filter-${label}`}
+                                                    color={colorName as Color}
+                                                    selected={filters.includes(
+                                                        label
+                                                    )}
+                                                    onClick={() =>
+                                                        filters.includes(label)
+                                                            ? setFilters(
+                                                                  filters.filter(
+                                                                      category =>
+                                                                          category !==
+                                                                          label
+                                                                  )
+                                                              )
+                                                            : setFilters([
+                                                                  ...filters,
+                                                                  label
+                                                              ])
+                                                    }
+                                                >
+                                                    {label}
+                                                </BadgeToggle>
+                                            )
+                                        )}
+                                    </div>
+                                </div>
+                            </Card>
+                        )}
+                    </SlideFade>
                     <Table>
                         <TableBody>
                             {transactions.map(item => (
@@ -397,7 +453,7 @@ export default function Expenses() {
                                                 ).map(colorName => (
                                                     <div
                                                         key={colorName}
-                                                        className={`p-2 rounded-full cursor-pointer ${
+                                                        className={`p-1 rounded-full cursor-pointer ${
                                                             color ===
                                                                 colorName &&
                                                             'border'
@@ -426,9 +482,9 @@ export default function Expenses() {
                                                     </div>
                                                 ))}
                                             </div>
-                                            <div className="text-right">
-                                                <Button>Add</Button>
-                                            </div>
+                                            <Button className="w-full">
+                                                Add
+                                            </Button>
                                         </div>
                                     </Card>
                                 </SlideFade>
