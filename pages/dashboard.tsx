@@ -37,7 +37,7 @@ const categories = [
         label: 'Necessities',
         amount: 539,
         color: themeConfig.theme.colors.successlight,
-        colorName: 'teal'
+        colorName: 'green'
     }
 ]
 
@@ -84,7 +84,7 @@ export default function Dashboard() {
                                 title="Savings"
                                 amount={7879}
                                 increment={8.2}
-                                color="teal"
+                                color="green"
                             />
 
                             <Card className="col-span-full">
@@ -95,7 +95,7 @@ export default function Dashboard() {
                                             data={categories}
                                             category="amount"
                                             index="label"
-                                            colors={['blue', 'indigo', 'teal']}
+                                            colors={['blue', 'indigo', 'green']}
                                             valueFormatter={(amount: number) =>
                                                 `$ ${amount}`
                                             }

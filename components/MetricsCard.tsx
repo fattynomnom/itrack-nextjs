@@ -9,7 +9,7 @@ export default function MetricsCard({
     title: string
     amount: number
     increment: number
-    color: 'blue' | 'indigo' | 'teal'
+    color: 'blue' | 'indigo' | 'green'
 }) {
     return (
         <Card decoration="top" decorationColor={color}>

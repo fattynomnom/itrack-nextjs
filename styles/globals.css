@@ -94,7 +94,7 @@ a {
     @apply text-primary;
 }
 
-/* region chakra drawer */
+/* chakra drawer */
 .chakra-slide {
     @apply rounded-l-tremor-default divide-y max-w-[30%] !important;
 }
@@ -107,7 +107,33 @@ a {
     @apply p-7 pt-3 !important;
 }
 
-/* region tremor input */
+/* chakra alert */
+.chakra-alert {
+    @apply py-2 rounded-full !important;
+}
+
+.chakra-alert[data-status='info'] {
+    @apply bg-bgcolor !important;
+}
+
+.chakra-alert__title[data-status='info'] {
+    @apply font-normal text-sm text-tremor-content dark:text-dark-tremor-content !important;
+}
+
+.chakra-alert__icon[data-status='info'] {
+    @apply hidden !important;
+}
+
+.chakra-toast button {
+    @apply text-tremor-content dark:text-dark-tremor-content right-2 top-1.5 !important;
+}
+
+/* tremor input */
 .tremor-TextInput-input {
     @apply placeholder:text-tremor-content-subtle !important;
+}
+
+/* tremor bar list */
+.tremor-BarList-bar > :first-child {
+    @apply left-5 !important;
 }

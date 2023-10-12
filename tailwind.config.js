@@ -102,9 +102,9 @@ const themeColors = {
     secondary: colors.indigo[200],
     danger: '#e63946',
     dangerdark: colors.red[950],
-    successlight: colors.teal[200],
-    success: colors.teal[300],
-    successdark: colors.teal[600],
+    successlight: colors.green[200],
+    success: colors.green[300],
+    successdark: colors.green[600],
     bgcolor: colors.gray[200]
 }
 const defaultColors = {
@@ -115,7 +115,7 @@ const defaultColors = {
     yellow: {
         500: colors.yellow[200]
     },
-    teal: {
+    green: {
         500: themeColors.successlight
     },
     lime: {
@@ -132,6 +132,9 @@ const defaultColors = {
     },
     rose: {
         500: colors.rose[200]
+    },
+    gray: {
+        200: colors.gray[200]
     }
 }
 // #endregion

@@ -4,11 +4,12 @@ import {
     ChartPieIcon,
     ChevronDownIcon,
     ChevronUpIcon,
-    PencilIcon
+    PencilIcon,
+    XMarkIcon
 } from '@heroicons/react/24/solid'
 import {
-    Badge,
     BarChart,
+    BarList,
     Button,
     Card,
     Color,
@@ -36,10 +37,11 @@ import {
     DrawerHeader,
     DrawerOverlay,
     SlideFade,
-    useDisclosure
+    useDisclosure,
+    useToast
 } from '@chakra-ui/react'
 
-import BadgeToggle from '../components/BadgeToggle'
+import Badge from '../components/Badge'
 import ButtonToggle from '../components/ButtonToggle'
 import TopNav from '../components/TopNav'
 import resolveConfig from 'tailwindcss/resolveConfig'
@@ -65,7 +67,7 @@ const categories = [
         label: 'Necessities',
         amount: 539,
         color: themeConfig.theme.colors.successlight,
-        colorName: 'teal'
+        colorName: 'green'
     },
     {
         label: 'Bills',
@@ -124,12 +126,19 @@ const transactions = [
         amount: '22',
         category: {
             name: 'Entertainment',
-            color: 'teal'
+            color: 'green'
         }
     }
 ]
 
+const overall = [
+    { name: 'Income', value: 7279 },
+    { name: 'Expenses', value: 2780 },
+    { name: 'Savings', value: 1203 }
+]
+
 export default function Expenses() {
+    const toast = useToast()
     const [chart, setChart] = useState('donut')
     const [categoryType, setCategoryType] = useState('wants')
     const [color, setColor] = useState('orange')
@@ -150,10 +159,19 @@ export default function Expenses() {
         <div className="h-full">
             <TopNav />
 
-            <div className="grid grid-cols-2 divide-x h-full">
-                <div className="p-7 h-full">
+            <div className="grid grid-cols-12 divide-x h-full">
+                <div className="col-span-7 p-7 h-full space-y-5">
+                    <Card decoration="top" decorationColor="blue">
+                        <Title>Overall</Title>
+                        <BarList
+                            data={overall}
+                            className="mt-5"
+                            valueFormatter={(amount: number) => `$ ${amount}`}
+                        />
+                    </Card>
+
                     <Card>
-                        <Title>Expenses by category</Title>
+                        <Title>Expenses</Title>
                         <div className="mt-5 space-y-5">
                             <div className="mx-auto">
                                 {chart === 'donut' ? (
@@ -179,7 +197,7 @@ export default function Expenses() {
                                             Amount: category.amount
                                         }))}
                                         index="label"
-                                        colors={['indigo', 'blue', 'teal']}
+                                        colors={['indigo', 'blue', 'green']}
                                         categories={['Amount']}
                                         valueFormatter={(amount: number) =>
                                             `$ ${amount}`
@@ -226,7 +244,26 @@ export default function Expenses() {
                                                     }) => (
                                                         <li
                                                             key={label}
-                                                            className="px-2 py-3 flex justify-between rounded-tremor-default hover:bg-tremor-background-muted"
+                                                            className="cursor-pointer px-2 py-3 flex justify-between rounded-tremor-default hover:bg-tremor-background-muted"
+                                                            onClick={() => {
+                                                                if (
+                                                                    !filters.includes(
+                                                                        label
+                                                                    )
+                                                                ) {
+                                                                    setFilters([
+                                                                        ...filters,
+                                                                        label
+                                                                    ])
+                                                                    toast({
+                                                                        title: 'Category added to transaction filter',
+                                                                        status: 'info',
+                                                                        duration: 1500,
+                                                                        isClosable:
+                                                                            true
+                                                                    })
+                                                                }
+                                                            }}
                                                         >
                                                             <div className="flex space-x-3">
                                                                 <div
@@ -291,29 +328,46 @@ export default function Expenses() {
                     </Card>
                 </div>
 
-                <div className="p-7 space-y-3 h-full">
+                <div className="col-span-5 p-7 space-y-3 h-full">
                     <div className="flex items-center justify-between space-x-4">
                         <Title>Transactions</Title>
-                        <Icon
-                            icon={AdjustmentsHorizontalIcon}
-                            variant="simple"
-                            tooltip="Filters"
-                            size="md"
-                            className="cursor-pointer"
-                            onClick={() =>
-                                isFilterOpen ? onFilterClose() : onFilterOpen()
-                            }
-                        />
+                        <div className="flex items-center space-x-3">
+                            {filters.length > 0 && (
+                                <Badge
+                                    size="md"
+                                    color="gray"
+                                    className="bg-tremor-background-subtle"
+                                    closable
+                                    onClick={() => setFilters([])}
+                                >
+                                    {filters.length} filter(s)
+                                </Badge>
+                            )}
+                            <Icon
+                                icon={AdjustmentsHorizontalIcon}
+                                variant="simple"
+                                tooltip="Filters"
+                                size="md"
+                                className="cursor-pointer"
+                                onClick={() =>
+                                    isFilterOpen
+                                        ? onFilterClose()
+                                        : onFilterOpen()
+                                }
+                            />
+                        </div>
                     </div>
                     <SlideFade in={isFilterOpen}>
                         {isFilterOpen && (
                             <Card>
                                 <div className="space-y-3">
                                     <DatePicker />
-                                    <div className="flex flex-wrap space-x-1">
+                                    <div className="flex flex-wrap">
                                         {categories.map(
                                             ({ label, colorName }) => (
-                                                <BadgeToggle
+                                                <Badge
+                                                    selectable
+                                                    className="mr-1 mb-1"
                                                     key={`filter-${label}`}
                                                     color={colorName as Color}
                                                     selected={filters.includes(
@@ -335,7 +389,7 @@ export default function Expenses() {
                                                     }
                                                 >
                                                     {label}
-                                                </BadgeToggle>
+                                                </Badge>
                                             )
                                         )}
                                     </div>
@@ -350,7 +404,6 @@ export default function Expenses() {
                                     <TableCell className="w-[1%]">
                                         <div className="space-y-2">
                                             <Badge
-                                                size="xs"
                                                 color={
                                                     item.category.color as Color
                                                 }
@@ -495,6 +548,18 @@ export default function Expenses() {
             </div>
 
             <style jsx global>{`
+                .tremor-BarList-bar:nth-child(1) {
+                    @apply bg-green-200;
+                }
+
+                .tremor-BarList-bar:nth-child(2) {
+                    @apply bg-rose-200;
+                }
+
+                .tremor-BarList-bar:nth-child(3) {
+                    @apply bg-blue-200;
+                }
+
                 ${categories
                     .map(
                         (
@@ -508,10 +573,6 @@ export default function Expenses() {
 
                 .recharts-legend-wrapper {
                     @apply hidden;
-                }
-
-                .tremor-Badge-text {
-                    @apply text-xs;
                 }
 
                 .tremor-TableRow-row > :first-child {

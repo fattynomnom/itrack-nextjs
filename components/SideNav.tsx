@@ -1,5 +1,6 @@
 import {
     BanknotesIcon,
+    BookOpenIcon,
     Cog6ToothIcon,
     Squares2X2Icon
 } from '@heroicons/react/24/solid'
@@ -21,7 +22,12 @@ const pages = [
         icon: (
             <BanknotesIcon className="h-5 w-5 text-tremor-content-emphasis" />
         ),
-        label: 'Expenses'
+        label: 'Expense & Income'
+    },
+    {
+        url: '/budgeting',
+        icon: <BookOpenIcon className="h-5 w-5 text-tremor-content-emphasis" />,
+        label: 'Budgeting'
     },
     {
         url: '/settings',
