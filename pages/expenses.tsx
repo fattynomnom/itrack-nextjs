@@ -4,8 +4,7 @@ import {
     ChartPieIcon,
     ChevronDownIcon,
     ChevronUpIcon,
-    PencilIcon,
-    XMarkIcon
+    PencilIcon
 } from '@heroicons/react/24/solid'
 import {
     BarChart,
@@ -16,6 +15,7 @@ import {
     DatePicker,
     DonutChart,
     Icon,
+    Metric,
     Subtitle,
     Tab,
     TabGroup,
@@ -43,6 +43,7 @@ import {
 
 import Badge from '../components/Badge'
 import ButtonToggle from '../components/ButtonToggle'
+import MetricsCard from '../components/MetricsCard'
 import TopNav from '../components/TopNav'
 import resolveConfig from 'tailwindcss/resolveConfig'
 import tailwindConfig from '../tailwind.config'
@@ -101,6 +102,57 @@ const categories = [
     }
 ]
 
+const allocation = [
+    {
+        label: 'Electronics',
+        amount: 988,
+        allocation: 900,
+        colorName: 'orange'
+    },
+    {
+        label: 'Travel',
+        amount: 321,
+        allocation: 300,
+        colorName: 'yellow'
+    },
+    {
+        label: 'Necessities',
+        amount: 539,
+        allocation: 500,
+        colorName: 'green'
+    },
+    {
+        label: 'Bills',
+        amount: 789,
+        allocation: 800,
+        colorName: 'lime'
+    },
+    {
+        label: 'Food',
+        amount: 987,
+        allocation: 1000,
+        colorName: 'blue'
+    },
+    {
+        label: 'Housing',
+        amount: 3241,
+        allocation: 3300,
+        colorName: 'indigo'
+    },
+    {
+        label: 'Hobby',
+        amount: 321,
+        allocation: 400,
+        colorName: 'fuchsia'
+    },
+    {
+        label: 'Pets',
+        amount: 398,
+        allocation: 400,
+        colorName: 'rose'
+    }
+]
+
 const transactions = [
     {
         name: 'Water bill',
@@ -154,21 +206,234 @@ export default function Expenses() {
         onOpen: onAddOpen,
         onClose: onAddClose
     } = useDisclosure()
+    const {
+        isOpen: isOverspentOpen,
+        onOpen: onOverspentOpen,
+        onClose: onOverspentClose
+    } = useDisclosure()
+    const {
+        isOpen: isUnderspentOpen,
+        onOpen: onUnderspentOpen,
+        onClose: onUnderspentClose
+    } = useDisclosure()
 
     return (
         <div className="h-full">
             <TopNav />
 
             <div className="grid grid-cols-12 divide-x h-full">
-                <div className="col-span-7 p-7 h-full space-y-5">
-                    <Card decoration="top" decorationColor="blue">
-                        <Title>Overall</Title>
-                        <BarList
-                            data={overall}
-                            className="mt-5"
-                            valueFormatter={(amount: number) => `$ ${amount}`}
-                        />
-                    </Card>
+                <div className="col-span-8 p-7 h-full space-y-5">
+                    <div className="grid grid-cols-2 gap-5">
+                        <div>
+                            <Card
+                                className="!p-0"
+                                decoration="top"
+                                decorationColor="rose"
+                            >
+                                <div className="px-6">
+                                    <div className="flex divide-x space-x-3">
+                                        <div className="py-4 flex-1 flex space-x-3 items-center">
+                                            <div>
+                                                <Text>Overspent</Text>
+                                                <Metric>$ 389</Metric>
+                                            </div>
+                                            <Badge color="rose">10%</Badge>
+                                        </div>
+                                        <div className="py-4 flex-1 text-center">
+                                            <Metric>8</Metric>
+                                            <Subtitle>categories</Subtitle>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="text-center py-4 border-t">
+                                    <Button
+                                        variant="light"
+                                        size="xs"
+                                        icon={
+                                            isOverspentOpen
+                                                ? ChevronUpIcon
+                                                : ChevronDownIcon
+                                        }
+                                        iconPosition="right"
+                                        onClick={() =>
+                                            isOverspentOpen
+                                                ? onOverspentClose()
+                                                : onOverspentOpen()
+                                        }
+                                    >
+                                        View details
+                                    </Button>
+                                </div>
+                                <SlideFade in={isOverspentOpen}>
+                                    {isOverspentOpen && (
+                                        <div className="px-6 pb-6">
+                                            <Text>
+                                                You went over your budget
+                                                allocation for these categories:
+                                            </Text>
+                                            <Table>
+                                                <TableBody>
+                                                    {allocation
+                                                        .filter(
+                                                            ({
+                                                                amount,
+                                                                allocation
+                                                            }) =>
+                                                                amount >
+                                                                allocation
+                                                        )
+                                                        .map(item => (
+                                                            <TableRow
+                                                                key={item.label}
+                                                            >
+                                                                <TableCell className="w-[1%]">
+                                                                    <div className="space-y-2">
+                                                                        <Badge
+                                                                            color={
+                                                                                item.colorName as Color
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                item.label
+                                                                            }
+                                                                        </Badge>
+                                                                        <Subtitle>
+                                                                            Allocated
+                                                                            ${' '}
+                                                                            {
+                                                                                item.allocation
+                                                                            }{' '}
+                                                                            |
+                                                                            Actual
+                                                                            ${' '}
+                                                                            {
+                                                                                item.amount
+                                                                            }
+                                                                        </Subtitle>
+                                                                    </div>
+                                                                </TableCell>
+                                                                <TableCell className="text-right">
+                                                                    <Text>
+                                                                        - $
+                                                                        {item.amount -
+                                                                            item.allocation}
+                                                                    </Text>
+                                                                </TableCell>
+                                                            </TableRow>
+                                                        ))}
+                                                </TableBody>
+                                            </Table>
+                                        </div>
+                                    )}
+                                </SlideFade>
+                            </Card>
+                        </div>
+
+                        <div>
+                            <Card
+                                className="!p-0"
+                                decoration="top"
+                                decorationColor="green"
+                            >
+                                <div className="px-6">
+                                    <div className="flex divide-x space-x-3">
+                                        <div className="py-4 flex-1 flex space-x-3 items-center">
+                                            <div>
+                                                <Text>Underspent</Text>
+                                                <Metric>$ 1000</Metric>
+                                            </div>
+                                            <Badge color="green">80%</Badge>
+                                        </div>
+                                        <div className="py-4 flex-1 text-center">
+                                            <Metric>8</Metric>
+                                            <Subtitle>categories</Subtitle>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="text-center py-4 border-t">
+                                    <Button
+                                        variant="light"
+                                        size="xs"
+                                        icon={
+                                            isUnderspentOpen
+                                                ? ChevronUpIcon
+                                                : ChevronDownIcon
+                                        }
+                                        iconPosition="right"
+                                        onClick={() =>
+                                            isUnderspentOpen
+                                                ? onUnderspentClose()
+                                                : onUnderspentOpen()
+                                        }
+                                    >
+                                        View details
+                                    </Button>
+                                </div>
+                                <SlideFade in={isUnderspentOpen}>
+                                    {isUnderspentOpen && (
+                                        <div className="px-6 pb-6">
+                                            <Text>
+                                                You underspent your allocation
+                                                for these categories:
+                                            </Text>
+                                            <Table>
+                                                <TableBody>
+                                                    {allocation
+                                                        .filter(
+                                                            ({
+                                                                amount,
+                                                                allocation
+                                                            }) =>
+                                                                amount <=
+                                                                allocation
+                                                        )
+                                                        .map(item => (
+                                                            <TableRow
+                                                                key={item.label}
+                                                            >
+                                                                <TableCell className="w-[1%]">
+                                                                    <div className="space-y-2">
+                                                                        <Badge
+                                                                            color={
+                                                                                item.colorName as Color
+                                                                            }
+                                                                        >
+                                                                            {
+                                                                                item.label
+                                                                            }
+                                                                        </Badge>
+                                                                        <Subtitle>
+                                                                            Allocated
+                                                                            ${' '}
+                                                                            {
+                                                                                item.allocation
+                                                                            }{' '}
+                                                                            |
+                                                                            Actual
+                                                                            ${' '}
+                                                                            {
+                                                                                item.amount
+                                                                            }
+                                                                        </Subtitle>
+                                                                    </div>
+                                                                </TableCell>
+                                                                <TableCell className="text-right">
+                                                                    <Text>
+                                                                        ${' '}
+                                                                        {item.allocation -
+                                                                            item.amount}
+                                                                    </Text>
+                                                                </TableCell>
+                                                            </TableRow>
+                                                        ))}
+                                                </TableBody>
+                                            </Table>
+                                        </div>
+                                    )}
+                                </SlideFade>
+                            </Card>
+                        </div>
+                    </div>
 
                     <Card>
                         <Title>Expenses</Title>
@@ -328,103 +593,118 @@ export default function Expenses() {
                     </Card>
                 </div>
 
-                <div className="col-span-5 p-7 space-y-3 h-full">
-                    <div className="flex items-center justify-between space-x-4">
-                        <Title>Transactions</Title>
-                        <div className="flex items-center space-x-3">
-                            {filters.length > 0 && (
-                                <Badge
-                                    size="md"
-                                    color="gray"
-                                    className="bg-tremor-background-subtle"
-                                    closable
-                                    onClick={() => setFilters([])}
-                                >
-                                    {filters.length} filter(s)
-                                </Badge>
-                            )}
-                            <Icon
-                                icon={AdjustmentsHorizontalIcon}
-                                variant="simple"
-                                tooltip="Filters"
-                                size="md"
-                                className="cursor-pointer"
-                                onClick={() =>
-                                    isFilterOpen
-                                        ? onFilterClose()
-                                        : onFilterOpen()
-                                }
-                            />
-                        </div>
+                <div className="col-span-4 divide-y h-full">
+                    <div className="p-7 space-y-5">
+                        <Title>Overall</Title>
+                        <BarList
+                            data={overall}
+                            valueFormatter={(amount: number) => `$ ${amount}`}
+                        />
                     </div>
-                    <SlideFade in={isFilterOpen}>
-                        {isFilterOpen && (
-                            <Card>
-                                <div className="space-y-3">
-                                    <DatePicker />
-                                    <div className="flex flex-wrap">
-                                        {categories.map(
-                                            ({ label, colorName }) => (
-                                                <Badge
-                                                    selectable
-                                                    className="mr-1 mb-1"
-                                                    key={`filter-${label}`}
-                                                    color={colorName as Color}
-                                                    selected={filters.includes(
-                                                        label
-                                                    )}
-                                                    onClick={() =>
-                                                        filters.includes(label)
-                                                            ? setFilters(
-                                                                  filters.filter(
-                                                                      category =>
-                                                                          category !==
-                                                                          label
+
+                    <div className="space-y-3 p-7">
+                        <div className="flex items-center justify-between space-x-4">
+                            <Title>Transactions</Title>
+                            <div className="flex items-center space-x-3">
+                                {filters.length > 0 && (
+                                    <Badge
+                                        size="md"
+                                        color="gray"
+                                        className="bg-tremor-background-subtle"
+                                        closable
+                                        onClick={() => setFilters([])}
+                                    >
+                                        {filters.length} filter(s)
+                                    </Badge>
+                                )}
+                                <Icon
+                                    icon={AdjustmentsHorizontalIcon}
+                                    variant="simple"
+                                    tooltip="Filters"
+                                    size="md"
+                                    className="cursor-pointer"
+                                    onClick={() =>
+                                        isFilterOpen
+                                            ? onFilterClose()
+                                            : onFilterOpen()
+                                    }
+                                />
+                            </div>
+                        </div>
+                        <SlideFade in={isFilterOpen}>
+                            {isFilterOpen && (
+                                <Card>
+                                    <div className="space-y-3">
+                                        <DatePicker />
+                                        <div className="flex flex-wrap">
+                                            {categories.map(
+                                                ({ label, colorName }) => (
+                                                    <Badge
+                                                        selectable
+                                                        className="mr-1 mb-1"
+                                                        key={`filter-${label}`}
+                                                        color={
+                                                            colorName as Color
+                                                        }
+                                                        selected={filters.includes(
+                                                            label
+                                                        )}
+                                                        onClick={() =>
+                                                            filters.includes(
+                                                                label
+                                                            )
+                                                                ? setFilters(
+                                                                      filters.filter(
+                                                                          category =>
+                                                                              category !==
+                                                                              label
+                                                                      )
                                                                   )
-                                                              )
-                                                            : setFilters([
-                                                                  ...filters,
-                                                                  label
-                                                              ])
+                                                                : setFilters([
+                                                                      ...filters,
+                                                                      label
+                                                                  ])
+                                                        }
+                                                    >
+                                                        {label}
+                                                    </Badge>
+                                                )
+                                            )}
+                                        </div>
+                                    </div>
+                                </Card>
+                            )}
+                        </SlideFade>
+                        <Table>
+                            <TableBody>
+                                {transactions.map(item => (
+                                    <TableRow key={item.name}>
+                                        <TableCell className="w-[1%]">
+                                            <div className="space-y-2">
+                                                <Badge
+                                                    color={
+                                                        item.category
+                                                            .color as Color
                                                     }
                                                 >
-                                                    {label}
+                                                    {item.category.name}
                                                 </Badge>
-                                            )
-                                        )}
-                                    </div>
-                                </div>
-                            </Card>
-                        )}
-                    </SlideFade>
-                    <Table>
-                        <TableBody>
-                            {transactions.map(item => (
-                                <TableRow key={item.name}>
-                                    <TableCell className="w-[1%]">
-                                        <div className="space-y-2">
-                                            <Badge
-                                                color={
-                                                    item.category.color as Color
-                                                }
-                                            >
-                                                {item.category.name}
-                                            </Badge>
-                                            <Subtitle className="text-xs">
-                                                {item.date}
-                                            </Subtitle>
-                                        </div>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Text>{item.name}</Text>
-                                    </TableCell>
-                                    <TableCell className="text-right">
-                                        <Text>$ {item.amount}</Text>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
+                                                <Subtitle className="text-xs">
+                                                    {item.date}
+                                                </Subtitle>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell>
+                                            <Text>{item.name}</Text>
+                                        </TableCell>
+                                        <TableCell className="text-right">
+                                            <Text>$ {item.amount}</Text>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </div>
                 </div>
 
                 <Drawer isOpen={isOpen} placement="right" onClose={onClose}>

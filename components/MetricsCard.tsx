@@ -1,4 +1,4 @@
-import { BadgeDelta, Card, Metric, Text } from '@tremor/react'
+import { BadgeDelta, Card, Color, Metric, Text } from '@tremor/react'
 
 export default function MetricsCard({
     title,
@@ -9,7 +9,7 @@ export default function MetricsCard({
     title: string
     amount: number
     increment: number
-    color: 'blue' | 'indigo' | 'green'
+    color: Color
 }) {
     return (
         <Card decoration="top" decorationColor={color}>
