@@ -155,3 +155,7 @@ input {
 .tremor-TableRow-row > :last-child {
     @apply pr-0;
 }
+
+.tremor-TableHeaderCell-root {
+    @apply pb-0;
+}
