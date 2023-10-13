@@ -2,6 +2,7 @@ import { Button, Card, Color, Text, TextInput } from '@tremor/react'
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid'
 import { SlideFade, useDisclosure } from '@chakra-ui/react'
 
+import Badge from './Badge'
 import ButtonToggle from './ButtonToggle'
 import tailwindConfig from '../tailwind.config'
 import { useState } from 'react'
@@ -28,18 +29,23 @@ export default function CategorySettings({
     return (
         <div className="space-y-4">
             <ul>
-                {categories.map(({ label, color }) => (
+                {categories.map(({ label, color }, index) => (
                     <li
                         key={label}
-                        className="px-2 py-3 flex space-x-3 rounded-tremor-default hover:bg-tremor-background-muted"
+                        className="px-2 py-3 flex justify-between rounded-tremor-default hover:bg-tremor-background-muted"
                     >
-                        <div
-                            className="w-5 h-5 rounded-full"
-                            style={{
-                                backgroundColor: color as string
-                            }}
-                        />
-                        <Text>{label}</Text>
+                        <div className="flex space-x-3">
+                            <div
+                                className="w-5 h-5 rounded-full"
+                                style={{
+                                    backgroundColor: color as string
+                                }}
+                            />
+                            <Text>{label}</Text>
+                        </div>
+                        <Badge color="gray">
+                            {index % 2 === 1 ? 'Wants' : 'Needs'}
+                        </Badge>
                     </li>
                 ))}
             </ul>
