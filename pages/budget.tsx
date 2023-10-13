@@ -168,7 +168,7 @@ export default function Expenses() {
 
     return (
         <div className="h-full">
-            <TopNav />
+            <TopNav categories={categories} />
 
             <div className="grid grid-cols-12 divide-x h-full">
                 <div className="col-span-8 p-7 h-full space-y-5">

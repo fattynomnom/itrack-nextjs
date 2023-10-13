@@ -147,7 +147,9 @@ export default function CategorySettings({
                                 )
                             )}
                         </div>
-                        <Button className="w-full">Add</Button>
+                        <Button variant="secondary" className="w-full">
+                            Add
+                        </Button>
                     </div>
                 </Card>
             </SlideFade>

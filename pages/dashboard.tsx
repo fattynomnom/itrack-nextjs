@@ -109,7 +109,7 @@ export default function Dashboard() {
     return (
         <div>
             {/* <Button label="Logout" onClick={logoutAndRedirect} /> */}
-            <TopNav />
+            <TopNav categories={categories} />
 
             <div className="space-y-4">
                 <div className="grid grid-cols-12 divide-x">

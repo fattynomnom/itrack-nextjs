@@ -107,6 +107,15 @@ a {
     @apply p-7 pt-5 !important;
 }
 
+/* chakra modal */
+.chakra-modal__content {
+    @apply rounded-tremor-default divide-y !important;
+}
+
+.chakra-modal__close-btn {
+    @apply border-none !important;
+}
+
 /* chakra alert */
 .chakra-alert {
     @apply py-2 rounded-full !important;
@@ -129,11 +138,7 @@ a {
 }
 
 /* tremor input */
-.tremor-TextInput-input {
-    @apply placeholder:text-tremor-content-subtle !important;
-}
-
-.tremor-NumberInput-input {
+input {
     @apply placeholder:text-tremor-content-subtle !important;
 }
 
