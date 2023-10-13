@@ -18,16 +18,16 @@ const pages = [
         label: 'Dashboard'
     },
     {
-        url: '/expenses',
+        url: '/budget',
         icon: (
             <BanknotesIcon className="h-5 w-5 text-tremor-content-emphasis" />
         ),
-        label: 'Expense & Income'
+        label: 'Budget'
     },
     {
-        url: '/budgeting',
+        url: '/assets-liabilities',
         icon: <BookOpenIcon className="h-5 w-5 text-tremor-content-emphasis" />,
-        label: 'Budgeting'
+        label: 'Assets / Liabilities'
     },
     {
         url: '/settings',

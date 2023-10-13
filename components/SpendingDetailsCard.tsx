@@ -10,7 +10,11 @@ import {
     TableRow,
     Text
 } from '@tremor/react'
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid'
+import {
+    ChevronDownIcon,
+    ChevronUpIcon,
+    PencilIcon
+} from '@heroicons/react/24/solid'
 import { SlideFade, useDisclosure } from '@chakra-ui/react'
 
 import Badge from './Badge'
@@ -65,53 +69,63 @@ export default function SpendingDetailsCard({
             </div>
             <SlideFade in={isOpen}>
                 {isOpen && (
-                    <div className="px-6 pb-6">
-                        <Text>
-                            {type === 'overspent'
-                                ? 'You went over your budget allocation for these categories:'
-                                : 'You underspent your allocation for these categories:'}
-                        </Text>
-                        <Table>
-                            <TableBody>
-                                {spending
-                                    .filter(({ amount, allocation }) =>
-                                        type === 'overspent'
-                                            ? amount > allocation
-                                            : amount <= allocation
-                                    )
-                                    .map(item => (
-                                        <TableRow key={item.label}>
-                                            <TableCell className="w-[1%]">
-                                                <div className="space-y-2">
-                                                    <Badge
-                                                        color={item.colorName}
-                                                    >
-                                                        {item.label}
-                                                    </Badge>
-                                                    <Subtitle>
-                                                        Allocated ${' '}
-                                                        {item.allocation} |
-                                                        Actual $ {item.amount}
-                                                    </Subtitle>
-                                                </div>
-                                            </TableCell>
-                                            <TableCell className="text-right">
-                                                <Text>
-                                                    {type === 'overspent'
-                                                        ? `- $ ${
-                                                              item.amount -
-                                                              item.allocation
-                                                          }`
-                                                        : `$ ${
-                                                              item.allocation -
-                                                              item.amount
-                                                          }`}
-                                                </Text>
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                            </TableBody>
-                        </Table>
+                    <div>
+                        <div className="px-6">
+                            <Text>
+                                {type === 'overspent'
+                                    ? 'You went over your budget allocation for these categories:'
+                                    : 'You underspent your allocation for these categories:'}
+                            </Text>
+                            <Table>
+                                <TableBody>
+                                    {spending
+                                        .filter(({ amount, allocation }) =>
+                                            type === 'overspent'
+                                                ? amount > allocation
+                                                : amount <= allocation
+                                        )
+                                        .map(item => (
+                                            <TableRow key={item.label}>
+                                                <TableCell className="w-[1%]">
+                                                    <div className="space-y-2">
+                                                        <Badge
+                                                            color={
+                                                                item.colorName
+                                                            }
+                                                        >
+                                                            {item.label}
+                                                        </Badge>
+                                                        <Subtitle>
+                                                            Allocated ${' '}
+                                                            {item.allocation} |
+                                                            Actual ${' '}
+                                                            {item.amount}
+                                                        </Subtitle>
+                                                    </div>
+                                                </TableCell>
+                                                <TableCell className="text-right">
+                                                    <Text>
+                                                        {type === 'overspent'
+                                                            ? `- $ ${
+                                                                  item.amount -
+                                                                  item.allocation
+                                                              }`
+                                                            : `$ ${
+                                                                  item.allocation -
+                                                                  item.amount
+                                                              }`}
+                                                    </Text>
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                </TableBody>
+                            </Table>
+                        </div>
+                        <div className="px-6 py-4 text-center border-t">
+                            <Button variant="light" size="xs" icon={PencilIcon}>
+                                Manage allocation
+                            </Button>
+                        </div>
                     </div>
                 )}
             </SlideFade>

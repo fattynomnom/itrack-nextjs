@@ -44,8 +44,8 @@ export default function ExpensesDetailsCard({
 
     return (
         <Card>
-            <Title>Expenses</Title>
-            <div className="mt-5 space-y-5">
+            <div className="space-y-5">
+                <Title>Expenses</Title>
                 <div className="mx-auto">
                     {chart === 'donut' ? (
                         <DonutChart
@@ -101,58 +101,39 @@ export default function ExpensesDetailsCard({
                     </div>
                     <TabPanels>
                         <TabPanel>
-                            <div className="space-y-3">
-                                <ul>
-                                    {categories.map(
-                                        ({ label, amount, color }) => (
-                                            <li
-                                                key={label}
-                                                className="cursor-pointer px-2 py-3 flex justify-between rounded-tremor-default hover:bg-tremor-background-muted"
-                                                onClick={() => {
-                                                    if (
-                                                        !filters.includes(label)
-                                                    ) {
-                                                        setFilters([
-                                                            ...filters,
-                                                            label
-                                                        ])
-                                                        toast({
-                                                            title: 'Category added to transaction filter',
-                                                            status: 'info',
-                                                            duration: 1500,
-                                                            isClosable: true
-                                                        })
-                                                    }
-                                                }}
-                                            >
-                                                <div className="flex space-x-3">
-                                                    <div
-                                                        className="w-5 h-5 rounded-full"
-                                                        style={{
-                                                            backgroundColor:
-                                                                color as string
-                                                        }}
-                                                    />
-                                                    <Text>{label}</Text>
-                                                </div>
-                                                <Text className="tabular-nums">
-                                                    $ {amount} (10%)
-                                                </Text>
-                                            </li>
-                                        )
-                                    )}
-                                </ul>
-                                <div className="text-right">
-                                    <Button
-                                        variant="light"
-                                        size="xs"
-                                        icon={PencilIcon}
-                                        onClick={onOpenCategories}
+                            <ul>
+                                {categories.map(({ label, amount, color }) => (
+                                    <li
+                                        key={label}
+                                        className="cursor-pointer px-2 py-3 flex justify-between rounded-tremor-default hover:bg-tremor-background-muted"
+                                        onClick={() => {
+                                            if (!filters.includes(label)) {
+                                                setFilters([...filters, label])
+                                                toast({
+                                                    title: 'Category added to transaction filter',
+                                                    status: 'info',
+                                                    duration: 1500,
+                                                    isClosable: true
+                                                })
+                                            }
+                                        }}
                                     >
-                                        Manage categories
-                                    </Button>
-                                </div>
-                            </div>
+                                        <div className="flex space-x-3">
+                                            <div
+                                                className="w-5 h-5 rounded-full"
+                                                style={{
+                                                    backgroundColor:
+                                                        color as string
+                                                }}
+                                            />
+                                            <Text>{label}</Text>
+                                        </div>
+                                        <Text className="tabular-nums">
+                                            $ {amount} (10%)
+                                        </Text>
+                                    </li>
+                                ))}
+                            </ul>
                         </TabPanel>
                         <TabPanel>
                             <ul>
@@ -180,6 +161,16 @@ export default function ExpensesDetailsCard({
                         </TabPanel>
                     </TabPanels>
                 </TabGroup>
+                <div className="text-right">
+                    <Button
+                        variant="light"
+                        size="xs"
+                        icon={PencilIcon}
+                        onClick={onOpenCategories}
+                    >
+                        Manage categories
+                    </Button>
+                </div>
             </div>
 
             <style jsx global>{`

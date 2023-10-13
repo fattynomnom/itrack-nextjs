@@ -58,7 +58,7 @@ export default function ExpensesSummaryCard({
                             size="xs"
                             iconPosition="right"
                             icon={ChevronDoubleRightIcon}
-                            onClick={() => router.push('/expenses')}
+                            onClick={() => router.push('/budget')}
                         >
                             View all
                         </Button>

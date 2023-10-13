@@ -104,7 +104,7 @@ a {
 }
 
 .chakra-modal__body {
-    @apply p-7 pt-3 !important;
+    @apply p-7 pt-5 !important;
 }
 
 /* chakra alert */
@@ -130,6 +130,10 @@ a {
 
 /* tremor input */
 .tremor-TextInput-input {
+    @apply placeholder:text-tremor-content-subtle !important;
+}
+
+.tremor-NumberInput-input {
     @apply placeholder:text-tremor-content-subtle !important;
 }
 

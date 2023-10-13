@@ -1,5 +1,9 @@
-import { BarList, Color, Title } from '@tremor/react'
 import {
+    Accordion,
+    AccordionButton,
+    AccordionIcon,
+    AccordionItem,
+    AccordionPanel,
     Drawer,
     DrawerBody,
     DrawerContent,
@@ -7,6 +11,7 @@ import {
     DrawerOverlay,
     useDisclosure
 } from '@chakra-ui/react'
+import { BarList, Color, Title } from '@tremor/react'
 
 import CategorySettings from '../components/CategorySettings'
 import ExpensesDetailsCard from '../components/ExpensesDetailsCard'
@@ -192,13 +197,24 @@ export default function Expenses() {
                 </div>
 
                 <div className="col-span-4 divide-y h-full">
-                    <div className="p-7 space-y-5">
-                        <Title>Overall</Title>
-                        <BarList
-                            data={overall}
-                            valueFormatter={(amount: number) => `$ ${amount}`}
-                        />
-                    </div>
+                    <Accordion allowMultiple>
+                        <AccordionItem>
+                            <AccordionButton>
+                                <Title>Overall</Title>
+                                <AccordionIcon />
+                            </AccordionButton>
+                            <AccordionPanel>
+                                <div className="px-7 pb-7">
+                                    <BarList
+                                        data={overall}
+                                        valueFormatter={(amount: number) =>
+                                            `$ ${amount}`
+                                        }
+                                    />
+                                </div>
+                            </AccordionPanel>
+                        </AccordionItem>
+                    </Accordion>
 
                     <TransactionsList
                         transactions={transactions}
@@ -234,6 +250,18 @@ export default function Expenses() {
 
                 .tremor-BarList-bar:nth-child(3) {
                     @apply bg-blue-200;
+                }
+
+                .chakra-accordion__item {
+                    @apply border-none !important;
+                }
+
+                .chakra-accordion__button {
+                    @apply px-7 pt-7 pb-5 justify-between hover:bg-white !important;
+                }
+
+                .chakra-accordion__panel {
+                    @apply p-0 !important;
                 }
             `}</style>
         </div>

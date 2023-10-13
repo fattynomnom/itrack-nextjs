@@ -1,5 +1,21 @@
-import { Button, Card, Color, Text, TextInput } from '@tremor/react'
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid'
+import {
+    Button,
+    Card,
+    Color,
+    NumberInput,
+    Subtitle,
+    Table,
+    TableBody,
+    TableCell,
+    TableRow,
+    Text,
+    TextInput
+} from '@tremor/react'
+import {
+    ChevronDownIcon,
+    ChevronUpIcon,
+    CurrencyDollarIcon
+} from '@heroicons/react/24/solid'
 import { SlideFade, useDisclosure } from '@chakra-ui/react'
 
 import Badge from './Badge'
@@ -28,27 +44,37 @@ export default function CategorySettings({
 
     return (
         <div className="space-y-4">
-            <ul>
-                {categories.map(({ label, color }, index) => (
-                    <li
-                        key={label}
-                        className="px-2 py-3 flex justify-between rounded-tremor-default hover:bg-tremor-background-muted"
-                    >
-                        <div className="flex space-x-3">
-                            <div
-                                className="w-5 h-5 rounded-full"
-                                style={{
-                                    backgroundColor: color as string
-                                }}
-                            />
-                            <Text>{label}</Text>
-                        </div>
-                        <Badge color="gray">
-                            {index % 2 === 1 ? 'Wants' : 'Needs'}
-                        </Badge>
-                    </li>
-                ))}
-            </ul>
+            <div className="space-y-1">
+                <div className="text-right font-semibold">
+                    <Subtitle>Allocation</Subtitle>
+                </div>
+                <ul>
+                    {categories.map(({ label, color, amount }, index) => (
+                        <li
+                            key={label}
+                            className="cursor-pointer px-2 py-3 flex justify-between rounded-tremor-default hover:bg-tremor-background-muted"
+                        >
+                            <div className="flex items-center space-x-3">
+                                <div
+                                    className="w-5 h-5 rounded-full"
+                                    style={{
+                                        backgroundColor: color as string
+                                    }}
+                                />
+                                <Text>{label}</Text>
+                            </div>
+                            <div className="flex space-x-3">
+                                <Badge color="gray">
+                                    {index % 2 === 1 ? 'Wants' : 'Needs'}
+                                </Badge>
+                                <div className="min-w-[70px] text-right">
+                                    <Text>$ {amount}</Text>
+                                </div>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </div>
             <div className="text-center">
                 <Button
                     variant="light"
@@ -86,6 +112,11 @@ export default function CategorySettings({
                                 }
                             />
                         </div>
+                        <NumberInput
+                            icon={CurrencyDollarIcon}
+                            placeholder="Budget allocation"
+                            min="0"
+                        />
                         <div className="flex justify-between">
                             {Object.keys(tailwindConfig.defaultColors).map(
                                 colorName => (
