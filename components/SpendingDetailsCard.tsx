@@ -21,7 +21,8 @@ import Badge from './Badge'
 
 export default function SpendingDetailsCard({
     type,
-    spending
+    spending,
+    onOpenCategories
 }: {
     type: 'overspent' | 'underspent'
     spending: {
@@ -30,6 +31,7 @@ export default function SpendingDetailsCard({
         allocation: number
         colorName: Color
     }[]
+    onOpenCategories: () => void
 }) {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -122,7 +124,12 @@ export default function SpendingDetailsCard({
                             </Table>
                         </div>
                         <div className="px-6 py-4 text-center border-t">
-                            <Button variant="light" size="xs" icon={PencilIcon}>
+                            <Button
+                                variant="light"
+                                size="xs"
+                                icon={PencilIcon}
+                                onClick={onOpenCategories}
+                            >
                                 Manage allocation
                             </Button>
                         </div>

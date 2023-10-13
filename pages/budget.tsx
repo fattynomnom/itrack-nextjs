@@ -177,6 +177,7 @@ export default function Expenses() {
                             <SpendingDetailsCard
                                 type="overspent"
                                 spending={allocation}
+                                onOpenCategories={onOpen}
                             />
                         </div>
 
@@ -184,6 +185,7 @@ export default function Expenses() {
                             <SpendingDetailsCard
                                 type="underspent"
                                 spending={allocation}
+                                onOpenCategories={onOpen}
                             />
                         </div>
                     </div>
