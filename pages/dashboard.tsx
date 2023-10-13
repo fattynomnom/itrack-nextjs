@@ -1,13 +1,7 @@
-import {
-    Card,
-    Color,
-    DonutChart,
-    ProgressBar,
-    Text,
-    Title
-} from '@tremor/react'
+import { Card, Color, ProgressBar, Text, Title } from '@tremor/react'
 
 import { Checkbox } from '@chakra-ui/react'
+import ExpensesSummaryCard from '../components/ExpensesSummaryCard'
 import MetricsCard from '../components/MetricsCard'
 import TopNav from '../components/TopNav'
 import TransactionsList from '../components/TransactionsList'
@@ -21,22 +15,52 @@ const themeConfig = resolveConfig(tailwindConfig)
 
 const categories = [
     {
-        label: 'Food',
-        amount: 987,
-        color: themeConfig.theme.colors.primary,
-        colorName: 'blue'
+        label: 'Electronics',
+        amount: 988,
+        color: themeConfig.theme.colors.orange[200],
+        colorName: 'orange' as Color
     },
     {
-        label: 'Housing',
-        amount: 3241,
-        color: themeConfig.theme.colors.secondary,
-        colorName: 'indigo'
+        label: 'Travel',
+        amount: 321,
+        color: themeConfig.theme.colors.yellow[200],
+        colorName: 'yellow' as Color
     },
     {
         label: 'Necessities',
         amount: 539,
         color: themeConfig.theme.colors.successlight,
-        colorName: 'green'
+        colorName: 'green' as Color
+    },
+    {
+        label: 'Bills',
+        amount: 789,
+        color: themeConfig.theme.colors.lime[200],
+        colorName: 'lime' as Color
+    },
+    {
+        label: 'Food',
+        amount: 987,
+        color: themeConfig.theme.colors.primary,
+        colorName: 'blue' as Color
+    },
+    {
+        label: 'Housing',
+        amount: 3241,
+        color: themeConfig.theme.colors.secondary,
+        colorName: 'indigo' as Color
+    },
+    {
+        label: 'Hobby',
+        amount: 321,
+        color: themeConfig.theme.colors.fuchsia[200],
+        colorName: 'fuchsia' as Color
+    },
+    {
+        label: 'Pets',
+        amount: 398,
+        color: themeConfig.theme.colors.rose[200],
+        colorName: 'rose' as Color
     }
 ]
 
@@ -110,46 +134,7 @@ export default function Dashboard() {
                                 color="green"
                             />
 
-                            <Card className="col-span-full">
-                                <Title>Expenses breakdown</Title>
-                                <div className="flex space-x-5 mt-5">
-                                    <div className="h-44 w-44">
-                                        <DonutChart
-                                            data={categories}
-                                            category="amount"
-                                            index="label"
-                                            colors={['blue', 'indigo', 'green']}
-                                            valueFormatter={(amount: number) =>
-                                                `$ ${amount}`
-                                            }
-                                        />
-                                    </div>
-                                    <ul className="flex-1 px-5 divide-y flex flex-col justify-center">
-                                        {categories.map(
-                                            ({ label, amount, color }) => (
-                                                <li
-                                                    key={label}
-                                                    className="py-3 flex justify-between"
-                                                >
-                                                    <div className="flex space-x-3">
-                                                        <div
-                                                            className="w-5 h-5 rounded-full"
-                                                            style={{
-                                                                backgroundColor:
-                                                                    color as string
-                                                            }}
-                                                        />
-                                                        <Text>{label}</Text>
-                                                    </div>
-                                                    <Text className="tabular-nums">
-                                                        $ {amount} (10%)
-                                                    </Text>
-                                                </li>
-                                            )
-                                        )}
-                                    </ul>
-                                </div>
-                            </Card>
+                            <ExpensesSummaryCard categories={categories} />
 
                             <div className="col-span-full grid grid-cols-2 gap-5">
                                 <Card>
