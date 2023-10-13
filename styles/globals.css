@@ -137,3 +137,12 @@ a {
 .tremor-BarList-bar > :first-child {
     @apply left-5 !important;
 }
+
+/* tremor table */
+.tremor-TableRow-row > :first-child {
+    @apply pl-0;
+}
+
+.tremor-TableRow-row > :last-child {
+    @apply pr-0;
+}

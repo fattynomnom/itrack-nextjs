@@ -3,15 +3,14 @@ import {
     Color,
     DonutChart,
     ProgressBar,
-    Subtitle,
     Text,
     Title
 } from '@tremor/react'
 
-import Button from '../components/Button'
 import { Checkbox } from '@chakra-ui/react'
 import MetricsCard from '../components/MetricsCard'
 import TopNav from '../components/TopNav'
+import TransactionsList from '../components/TransactionsList'
 import { logError } from '../services/LoggingService'
 import { logoutUser } from '../services/AuthService'
 import resolveConfig from 'tailwindcss/resolveConfig'
@@ -42,9 +41,33 @@ const categories = [
 ]
 
 const transactions = [
-    { name: 'Water bill', date: '11/11/2023', amount: '123.10' },
-    { name: 'Village Park', date: '11/11/2023', amount: '56.10' },
-    { name: 'Movie', date: '11/11/2023', amount: '22' }
+    {
+        name: 'Water bill',
+        date: '11/11/2023',
+        amount: 123.1,
+        category: {
+            name: 'Bills',
+            color: 'blue' as Color
+        }
+    },
+    {
+        name: 'Village Park',
+        date: '11/11/2023',
+        amount: 56.1,
+        category: {
+            name: 'Food',
+            color: 'indigo' as Color
+        }
+    },
+    {
+        name: 'Movie',
+        date: '11/11/2023',
+        amount: 22,
+        category: {
+            name: 'Entertainment',
+            color: 'green' as Color
+        }
+    }
 ]
 
 export default function Dashboard() {
@@ -183,24 +206,8 @@ export default function Dashboard() {
                             </div>
                         </div>
                     </div>
-                    <div className="col-span-4 p-7 space-y-3">
-                        <Title>Transactions</Title>
-                        <ul className="space-y-4 divide-y">
-                            {transactions.map(transaction => (
-                                <li
-                                    key={`${transaction.name}-${transaction.date}`}
-                                    className="flex items-center pt-4"
-                                >
-                                    <div className="flex-1">
-                                        <Text>{transaction.name}</Text>
-                                        <Subtitle>{transaction.date}</Subtitle>
-                                    </div>
-                                    <div className="tabular-nums">
-                                        $ {transaction.amount}
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
+                    <div className="col-span-4">
+                        <TransactionsList transactions={transactions} />
                     </div>
                 </div>
             </div>
