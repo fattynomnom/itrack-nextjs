@@ -4,10 +4,6 @@ import {
     Color,
     NumberInput,
     Subtitle,
-    Table,
-    TableBody,
-    TableCell,
-    TableRow,
     Text,
     TextInput
 } from '@tremor/react'
@@ -22,6 +18,17 @@ import Badge from './Badge'
 import ButtonToggle from './ButtonToggle'
 import tailwindConfig from '../tailwind.config'
 import { useState } from 'react'
+
+const defaultColors = [
+    'orange',
+    'yellow',
+    'green',
+    'lime',
+    'blue',
+    'indigo',
+    'fuchsia',
+    'rose'
+]
 
 export default function CategorySettings({
     categories
@@ -118,34 +125,31 @@ export default function CategorySettings({
                             min="0"
                         />
                         <div className="flex justify-between">
-                            {Object.keys(tailwindConfig.defaultColors).map(
-                                colorName => (
+                            {defaultColors.map(colorName => (
+                                <div
+                                    key={colorName}
+                                    className={`p-1 rounded-full cursor-pointer ${
+                                        color === colorName && 'border'
+                                    }`}
+                                    style={{
+                                        borderColor:
+                                            tailwindConfig.defaultColors[
+                                                colorName
+                                            ][500]
+                                    }}
+                                    onClick={() => setColor(colorName)}
+                                >
                                     <div
-                                        key={colorName}
-                                        className={`p-1 rounded-full cursor-pointer ${
-                                            color === colorName && 'border'
-                                        }`}
+                                        className="w-5 h-5 rounded-full"
                                         style={{
-                                            borderColor:
+                                            backgroundColor:
                                                 tailwindConfig.defaultColors[
                                                     colorName
                                                 ][500]
                                         }}
-                                        onClick={() => setColor(colorName)}
-                                    >
-                                        <div
-                                            className="w-5 h-5 rounded-full"
-                                            style={{
-                                                backgroundColor:
-                                                    tailwindConfig
-                                                        .defaultColors[
-                                                        colorName
-                                                    ][500]
-                                            }}
-                                        />
-                                    </div>
-                                )
-                            )}
+                                    />
+                                </div>
+                            ))}
                         </div>
                         <Button variant="secondary" className="w-full">
                             Add
