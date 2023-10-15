@@ -137,6 +137,19 @@ a {
     @apply text-tremor-content dark:text-dark-tremor-content right-2 top-1.5 !important;
 }
 
+/* chakra accordion */
+.chakra-accordion__item {
+    @apply border-none !important;
+}
+
+.chakra-accordion__button {
+    @apply px-7 pt-7 pb-5 justify-between hover:bg-white !important;
+}
+
+.chakra-accordion__panel {
+    @apply p-0 !important;
+}
+
 /* tremor input */
 input {
     @apply placeholder:text-tremor-content-subtle !important;
@@ -157,5 +170,14 @@ input {
 }
 
 .tremor-TableHeaderCell-root {
-    @apply pb-0;
+    @apply py-0;
+}
+
+/* tremor badge delta */
+.tremor-BadgeDelta-icon {
+    @apply h-4 mr-1;
+}
+
+.tremor-BadgeDelta-text {
+    @apply text-xs;
 }

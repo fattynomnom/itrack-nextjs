@@ -253,18 +253,6 @@ export default function Expenses() {
                 .tremor-BarList-bar:nth-child(3) {
                     @apply bg-blue-200;
                 }
-
-                .chakra-accordion__item {
-                    @apply border-none !important;
-                }
-
-                .chakra-accordion__button {
-                    @apply px-7 pt-7 pb-5 justify-between hover:bg-white !important;
-                }
-
-                .chakra-accordion__panel {
-                    @apply p-0 !important;
-                }
             `}</style>
         </div>
     )

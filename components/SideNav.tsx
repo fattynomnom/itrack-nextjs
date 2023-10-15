@@ -30,6 +30,11 @@ const pages = [
         label: 'Assets / Liabilities'
     },
     {
+        url: '/assets',
+        icon: <BookOpenIcon className="h-5 w-5 text-tremor-content-emphasis" />,
+        label: 'Assets'
+    },
+    {
         url: '/settings',
         icon: (
             <Cog6ToothIcon className="h-5 w-5 text-tremor-content-emphasis" />

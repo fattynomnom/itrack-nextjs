@@ -47,6 +47,17 @@ const fixedDeposits = [
     }
 ]
 
+// todo
+
+// manage investments
+// update investments values
+// add new investments
+// realized investments
+
+// manage fixed deposits
+// add new fd
+// matured fds
+
 export default function AssetsLiabilities() {
     // #region investments
     const totalCurrentValue = investments.reduce(
