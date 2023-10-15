@@ -5,7 +5,7 @@ import SideNav from '../components/SideNav'
 import { theme } from '../plugins/chakra'
 import { usePathname } from 'next/navigation'
 
-const authRoutes = ['/login', '/register']
+const authRoutes = ['/login', '/register', '/najwa']
 
 export default function MyApp({ Component, pageProps }) {
     const pathname = usePathname()
