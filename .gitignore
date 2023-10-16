@@ -28,3 +28,6 @@ yarn-error.log*
 
 # firebase secrets
 itrack-88108-firebase-adminsdk-aixml-1e5707124b.json
+
+# firebase hosting
+.firebase
