@@ -15,6 +15,7 @@ import { SlideFade, useDisclosure } from '@chakra-ui/react'
 
 import { AdjustmentsHorizontalIcon } from '@heroicons/react/24/solid'
 import Badge from './Badge'
+import { Category } from '../types/Category.d'
 
 export default function TransactionsList({
     transactions,
@@ -34,12 +35,7 @@ export default function TransactionsList({
     }[]
     hasFilters?: boolean
     filters?: string[]
-    categories?: {
-        label: string
-        amount: number
-        color: string
-        colorName: Color
-    }[]
+    categories?: Category[]
     setFilters?: (value: string[]) => void
 }) {
     const { isOpen, onOpen, onClose } = useDisclosure()

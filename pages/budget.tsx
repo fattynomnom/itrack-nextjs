@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react'
 import { BarList, Color, Title } from '@tremor/react'
 
+import { Category } from '../types/Category.d'
 import CategorySettings from '../components/CategorySettings'
 import ExpensesDetailsCard from '../components/ExpensesDetailsCard'
 import SpendingDetailsCard from '../components/SpendingDetailsCard'
@@ -106,16 +107,7 @@ const overall = [
     { name: 'Savings', value: 1203 }
 ]
 
-export default function Budget({
-    categories
-}: {
-    categories: {
-        label: string
-        amount: number
-        color: string
-        colorName: Color
-    }[]
-}) {
+export default function Budget({ categories }: { categories: Category[] }) {
     const [filters, setFilters] = useState<string[]>([])
     const { isOpen, onOpen, onClose } = useDisclosure()
 

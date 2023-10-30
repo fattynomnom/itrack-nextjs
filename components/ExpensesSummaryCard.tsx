@@ -1,17 +1,13 @@
 import { Button, Card, Color, DonutChart, Text, Title } from '@tremor/react'
 
+import { Category } from '../types/Category.d'
 import { ChevronDoubleRightIcon } from '@heroicons/react/24/solid'
 import { useRouter } from 'next/router'
 
 export default function ExpensesSummaryCard({
     categories
 }: {
-    categories: {
-        label: string
-        amount: number
-        color: string
-        colorName: Color
-    }[]
+    categories: Category[]
 }) {
     const router = useRouter()
 

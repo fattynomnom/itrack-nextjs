@@ -19,6 +19,7 @@ import {
 } from '@heroicons/react/24/solid'
 
 import ButtonToggle from './ButtonToggle'
+import { Category } from '../types/Category.d'
 import { useState } from 'react'
 import { useToast } from '@chakra-ui/react'
 
@@ -29,12 +30,7 @@ export default function ExpensesDetailsCard({
     onOpenCategories
 }: {
     filters: string[]
-    categories: {
-        label: string
-        amount: number
-        color: string
-        colorName: Color
-    }[]
+    categories: Category[]
     setFilters: (value: string[]) => void
     onOpenCategories: () => void
 }) {

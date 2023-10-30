@@ -1,5 +1,6 @@
 import { Card, Color, ProgressBar, Text, Title } from '@tremor/react'
 
+import { Category } from '../types/Category.d'
 import { Checkbox } from '@chakra-ui/react'
 import ExpensesSummaryCard from '../components/ExpensesSummaryCard'
 import MetricsCard from '../components/MetricsCard'
@@ -38,16 +39,7 @@ const transactions = [
     }
 ]
 
-export default function Dashboard({
-    categories
-}: {
-    categories: {
-        label: string
-        amount: number
-        color: string
-        colorName: Color
-    }[]
-}) {
+export default function Dashboard({ categories }: { categories: Category[] }) {
     const router = useRouter()
 
     const logoutAndRedirect = async () => {

@@ -1,6 +1,5 @@
 import {
     Button,
-    Color,
     NumberInput,
     SearchSelect,
     SearchSelectItem
@@ -17,6 +16,7 @@ import {
 } from '@chakra-ui/react'
 
 import ButtonToggle from '../components/ButtonToggle'
+import { Category } from '../types/Category.d'
 import SelectCycle from '../components/SelectCycle'
 import { useState } from 'react'
 
@@ -37,16 +37,7 @@ const months = [
 
 const years = [2020, 2021, 2022, 2023]
 
-export default function TopNav({
-    categories
-}: {
-    categories: {
-        label: string
-        amount: number
-        color: string
-        colorName: Color
-    }[]
-}) {
+export default function TopNav({ categories }: { categories: Category[] }) {
     const [frequency, setFrequency] = useState('monthly')
     const [monthIndex, setMonthIndex] = useState(1)
     const [yearIndex, setYearIndex] = useState(3)

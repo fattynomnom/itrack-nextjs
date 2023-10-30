@@ -16,6 +16,7 @@ import { SlideFade, useDisclosure } from '@chakra-ui/react'
 
 import Badge from './Badge'
 import ButtonToggle from './ButtonToggle'
+import { Category } from '../types/Category.d'
 import tailwindConfig from '../tailwind.config'
 import { useState } from 'react'
 
@@ -33,12 +34,7 @@ const defaultColors = [
 export default function CategorySettings({
     categories
 }: {
-    categories: {
-        label: string
-        amount: number
-        color: string
-        colorName: Color
-    }[]
+    categories: Category[]
 }) {
     const [categoryType, setCategoryType] = useState('wants')
     const [color, setColor] = useState('orange')
