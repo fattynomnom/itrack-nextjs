@@ -16,64 +16,8 @@ import { BarList, Color, Title } from '@tremor/react'
 import CategorySettings from '../components/CategorySettings'
 import ExpensesDetailsCard from '../components/ExpensesDetailsCard'
 import SpendingDetailsCard from '../components/SpendingDetailsCard'
-import TopNav from '../components/TopNav'
 import TransactionsList from '../components/TransactionsList'
-import resolveConfig from 'tailwindcss/resolveConfig'
-import tailwindConfig from '../tailwind.config'
 import { useState } from 'react'
-
-const themeConfig = resolveConfig(tailwindConfig)
-
-const categories = [
-    {
-        label: 'Electronics',
-        amount: 988,
-        color: themeConfig.theme.colors.orange[200],
-        colorName: 'orange' as Color
-    },
-    {
-        label: 'Travel',
-        amount: 321,
-        color: themeConfig.theme.colors.yellow[200],
-        colorName: 'yellow' as Color
-    },
-    {
-        label: 'Necessities',
-        amount: 539,
-        color: themeConfig.theme.colors.successlight,
-        colorName: 'green' as Color
-    },
-    {
-        label: 'Bills',
-        amount: 789,
-        color: themeConfig.theme.colors.lime[200],
-        colorName: 'lime' as Color
-    },
-    {
-        label: 'Food',
-        amount: 987,
-        color: themeConfig.theme.colors.primary,
-        colorName: 'blue' as Color
-    },
-    {
-        label: 'Housing',
-        amount: 3241,
-        color: themeConfig.theme.colors.secondary,
-        colorName: 'indigo' as Color
-    },
-    {
-        label: 'Hobby',
-        amount: 321,
-        color: themeConfig.theme.colors.fuchsia[200],
-        colorName: 'fuchsia' as Color
-    },
-    {
-        label: 'Pets',
-        amount: 398,
-        color: themeConfig.theme.colors.rose[200],
-        colorName: 'rose' as Color
-    }
-]
 
 const allocation = [
     {
@@ -162,84 +106,89 @@ const overall = [
     { name: 'Savings', value: 1203 }
 ]
 
-export default function Expenses() {
+export default function Budget({
+    categories
+}: {
+    categories: {
+        label: string
+        amount: number
+        color: string
+        colorName: Color
+    }[]
+}) {
     const [filters, setFilters] = useState<string[]>([])
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     return (
-        <div className="h-full">
-            <TopNav categories={categories} />
-
-            <div className="grid grid-cols-12 divide-x h-full">
-                <div className="col-span-8 p-7 h-full space-y-5">
-                    <div className="grid grid-cols-2 gap-5">
-                        <div>
-                            <SpendingDetailsCard
-                                type="overspent"
-                                spending={allocation}
-                                onOpenCategories={onOpen}
-                            />
-                        </div>
-
-                        <div>
-                            <SpendingDetailsCard
-                                type="underspent"
-                                spending={allocation}
-                                onOpenCategories={onOpen}
-                            />
-                        </div>
+        <div className="grid grid-cols-12 divide-x h-full">
+            <div className="col-span-8 p-7 h-full space-y-5">
+                <div className="grid grid-cols-2 gap-5">
+                    <div>
+                        <SpendingDetailsCard
+                            type="overspent"
+                            spending={allocation}
+                            onOpenCategories={onOpen}
+                        />
                     </div>
 
-                    <ExpensesDetailsCard
-                        filters={filters}
-                        categories={categories}
-                        setFilters={setFilters}
-                        onOpenCategories={onOpen}
-                    />
+                    <div>
+                        <SpendingDetailsCard
+                            type="underspent"
+                            spending={allocation}
+                            onOpenCategories={onOpen}
+                        />
+                    </div>
                 </div>
 
-                <div className="col-span-4 divide-y h-full">
-                    <Accordion allowMultiple>
-                        <AccordionItem>
-                            <AccordionButton>
-                                <Title>Overall</Title>
-                                <AccordionIcon />
-                            </AccordionButton>
-                            <AccordionPanel>
-                                <div className="px-7 pb-7">
-                                    <BarList
-                                        data={overall}
-                                        valueFormatter={(amount: number) =>
-                                            `$ ${amount}`
-                                        }
-                                    />
-                                </div>
-                            </AccordionPanel>
-                        </AccordionItem>
-                    </Accordion>
-
-                    <TransactionsList
-                        transactions={transactions}
-                        hasFilters
-                        filters={filters}
-                        categories={categories}
-                        setFilters={setFilters}
-                    />
-                </div>
-
-                <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
-                    <DrawerOverlay />
-                    <DrawerContent>
-                        <DrawerHeader>
-                            <Title>Manage categories</Title>
-                        </DrawerHeader>
-
-                        <DrawerBody>
-                            <CategorySettings categories={categories} />
-                        </DrawerBody>
-                    </DrawerContent>
-                </Drawer>
+                <ExpensesDetailsCard
+                    filters={filters}
+                    categories={categories}
+                    setFilters={setFilters}
+                    onOpenCategories={onOpen}
+                />
             </div>
+
+            <div className="col-span-4 divide-y h-full">
+                <Accordion allowMultiple>
+                    <AccordionItem>
+                        <AccordionButton>
+                            <Title>Overall</Title>
+                            <AccordionIcon />
+                        </AccordionButton>
+                        <AccordionPanel>
+                            <div className="px-7 pb-7">
+                                <BarList
+                                    data={overall}
+                                    valueFormatter={(amount: number) =>
+                                        `$ ${amount}`
+                                    }
+                                />
+                            </div>
+                        </AccordionPanel>
+                    </AccordionItem>
+                </Accordion>
+
+                <TransactionsList
+                    transactions={transactions}
+                    hasFilters
+                    filters={filters}
+                    categories={categories}
+                    setFilters={setFilters}
+                />
+            </div>
+
+            <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+                <DrawerOverlay />
+                <DrawerContent>
+                    <DrawerHeader>
+                        <Title>Manage categories</Title>
+                    </DrawerHeader>
+
+                    <DrawerBody>
+                        <CategorySettings categories={categories} />
+                    </DrawerBody>
+                </DrawerContent>
+            </Drawer>
 
             <style jsx global>{`
                 .tremor-BarList-bar:nth-child(1) {

@@ -43,12 +43,12 @@ const pages = [
     }
 ]
 
-export default function SideNav() {
+export default function SideNav({ className }: { className?: string }) {
     const pathname = usePathname()
     const router = useRouter()
 
     return (
-        <nav>
+        <nav className={className}>
             <ul className="nav-list bg-tremor-background-subtle p-10 space-y-3 h-full min-w-[300px] border-r">
                 {pages.map(page => (
                     <li

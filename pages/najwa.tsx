@@ -30,64 +30,88 @@ import XSmallMarbleImg from '../assets/plants/IMG_4333.jpg'
 export default function Najwa() {
     const schedule = [
         {
-            name: 'Asparagus fern',
-            date: 'Monday 11/10/23'
+            name: 'Wall - fern',
+            date: 'Saturday 21/10/23'
         },
         {
             name: 'Birds nest fern',
-            date: 'Monday 11/10/23'
-        },
-        {
-            name: 'Elephant ears',
-            date: 'Monday 11/10/23'
-        },
-        {
-            name: 'Spider plant',
-            date: 'Monday 11/10/23'
+            date: 'Saturday 21/10/23'
         },
         {
             name: 'Philo variegated',
-            date: 'Monday 11/10/23'
-        },
-        {
-            name: 'Marble queen',
-            date: 'Monday 11/10/23'
-        },
-        {
-            name: 'Small marble queen',
-            date: 'Monday 11/10/23'
-        },
-        {
-            name: 'Extra small marble queen',
-            date: 'Monday 11/10/23'
-        },
-        {
-            name: 'Neon pothos',
-            date: 'Monday 11/10/23'
-        },
-        {
-            name: 'Small neon pothos',
-            date: 'Monday 11/10/23'
+            date: 'Saturday 21/10/23'
         },
         {
             name: 'Syngonium',
-            date: 'Monday 11/10/23'
+            date: 'Saturday 21/10/23'
+        },
+        {
+            name: 'Asparagus fern',
+            date: 'Saturday 21/10/23'
         },
         {
             name: 'Palm',
-            date: 'Monday 11/10/23'
+            date: 'Saturday 21/10/23'
+        },
+        {
+            name: 'Neon pothos',
+            date: 'Sunday 22/10/23'
         },
         {
             name: 'Wall - pothos',
-            date: 'Monday 11/10/23'
+            date: 'Tuesday 24/10/23'
+        },
+        {
+            name: 'Spider plant',
+            date: 'Wednesday 25/10/23'
+        },
+        {
+            name: 'Birds nest fern',
+            date: 'Wednesday 25/10/23'
+        },
+        {
+            name: 'Philo variegated',
+            date: 'Wednesday 25/10/23'
+        },
+        {
+            name: 'Marble queen',
+            date: 'Wednesday 25/10/23'
+        },
+        {
+            name: 'Small marble queen',
+            date: 'Wednesday 25/10/23'
+        },
+        {
+            name: 'Small neon pothos',
+            date: 'Wednesday 25/10/23'
+        },
+        {
+            name: 'Asparagus fern',
+            date: 'Wednesday 25/10/23'
+        },
+        {
+            name: 'Palm',
+            date: 'Wednesday 25/10/23'
+        },
+        {
+            name: 'Elephant ears',
+            date: 'Thursday 26/10/23'
+        },
+        {
+            name: 'Syngonium',
+            date: 'Thursday 26/10/23'
+        },
+        {
+            name: 'Birds nest fern',
+            date: 'Saturday 28/10/23'
+        },
+        {
+            name: 'Neon pothos',
+            date: 'Saturday 28/10/23'
         },
         {
             name: 'Wall - spider',
-            date: 'Monday 11/10/23'
-        },
-        {
-            name: 'Wall - fern',
-            date: 'Monday 11/10/23'
+            date: 'Saturday 28/10/23'
         }
     ]
 
@@ -182,6 +206,10 @@ export default function Najwa() {
                     watering in just one spot.
                 </Text>
                 <Text>
+                    If you missed watering that day, don&apos;t stress, the
+                    plant won&apos;t die, just water it the next day
+                </Text>
+                <Text>
                     <Bold>For potted plants: </Bold>
                 </Text>
                 <Text>
@@ -207,6 +235,21 @@ export default function Najwa() {
                 </Text>
                 <Image
                     src={DishImg}
+                    alt=""
+                    width="100"
+                    height="100"
+                    className="w-full aspect-square object-cover rounded-full mt-2"
+                />
+            </div>
+
+            <div>
+                <Title>Honorable mention</Title>
+                <Text>
+                    Can&apos;t tell you when to water this plant, just water it
+                    whenever you see that the soil looks dry lmao.
+                </Text>
+                <Image
+                    src={XSmallMarbleImg}
                     alt=""
                     width="100"
                     height="100"

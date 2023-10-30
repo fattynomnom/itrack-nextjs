@@ -82,7 +82,12 @@ export default function TopNav({
                 )}
             </div>
 
-            <Button variant="secondary" icon={PlusIcon} onClick={onOpen}>
+            <Button
+                className="hidden sm:inline-flex"
+                variant="secondary"
+                icon={PlusIcon}
+                onClick={onOpen}
+            >
                 Record transaction
             </Button>
 
