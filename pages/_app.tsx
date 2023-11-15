@@ -4,6 +4,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { Color } from '@tremor/react'
 import SideNav from '../components/SideNav'
 import TopNav from '../components/TopNav'
+import { UserProvider } from '@auth0/nextjs-auth0/client'
 import resolveConfig from 'tailwindcss/resolveConfig'
 import tailwindConfig from '../tailwind.config'
 import { theme } from '../plugins/chakra'
@@ -11,7 +12,7 @@ import { usePathname } from 'next/navigation'
 
 const themeConfig = resolveConfig(tailwindConfig)
 
-const authRoutes = ['/login', '/register', '/najwa']
+const authRoutes = ['/login', '/register', '/']
 
 const categories = [
     {
@@ -69,29 +70,34 @@ export default function MyApp({ Component, pageProps }) {
 
     return (
         <ChakraProvider theme={theme}>
-            {authRoutes.includes(pathname) ? (
-                <Component {...pageProps} />
-            ) : (
-                <div className="flex h-full">
-                    <SideNav className="hidden md:block" />
-                    <div className="flex-1 overflow-y-auto">
-                        <div className="h-full">
-                            <TopNav categories={categories} />
-                            <Component {...pageProps} categories={categories} />
+            <UserProvider>
+                {authRoutes.includes(pathname) ? (
+                    <Component {...pageProps} />
+                ) : (
+                    <div className="flex h-full">
+                        <SideNav className="hidden md:block" />
+                        <div className="flex-1 overflow-y-auto">
+                            <div className="h-full">
+                                <TopNav categories={categories} />
+                                <Component
+                                    {...pageProps}
+                                    categories={categories}
+                                />
+                            </div>
                         </div>
-                    </div>
 
-                    <style jsx global>{`
-                        html,
-                        body,
-                        body > div:first-child,
-                        div#__next,
-                        div#__next > main {
-                            height: 100%;
-                        }
-                    `}</style>
-                </div>
-            )}
+                        <style jsx global>{`
+                            html,
+                            body,
+                            body > div:first-child,
+                            div#__next,
+                            div#__next > main {
+                                height: 100%;
+                            }
+                        `}</style>
+                    </div>
+                )}
+            </UserProvider>
         </ChakraProvider>
     )
 }

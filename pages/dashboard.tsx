@@ -5,8 +5,10 @@ import { Checkbox } from '@chakra-ui/react'
 import ExpensesSummaryCard from '../components/ExpensesSummaryCard'
 import MetricsCard from '../components/MetricsCard'
 import TransactionsList from '../components/TransactionsList'
+import axios from 'axios'
 import { logError } from '../services/LoggingService'
 import { logoutUser } from '../services/AuthService'
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 const transactions = [
@@ -50,6 +52,14 @@ export default function Dashboard({ categories }: { categories: Category[] }) {
             logError(error)
         }
     }
+
+    useEffect(() => {
+        const getUsers = async () => {
+            const response = await axios.get('/api/users')
+            console.log(response)
+        }
+        getUsers()
+    }, [])
 
     return (
         <div className="space-y-4">

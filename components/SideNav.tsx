@@ -1,4 +1,5 @@
 import {
+    ArrowLeftOnRectangleIcon,
     BanknotesIcon,
     BookOpenIcon,
     Cog6ToothIcon,
@@ -49,21 +50,29 @@ export default function SideNav({ className }: { className?: string }) {
 
     return (
         <nav className={className}>
-            <ul className="nav-list bg-tremor-background-subtle p-10 space-y-3 h-full min-w-[300px] border-r">
+            <ul className="bg-tremor-background-subtle p-10 space-y-3 h-full min-w-[300px] border-r">
                 {pages.map(page => (
                     <li
                         key={page.url}
-                        className={pathname === page.url && 'bg-bgcolor'}
+                        className={`nav-item ${
+                            pathname === page.url ? 'bg-bgcolor' : ''
+                        }`}
                         onClick={() => router.push(page.url)}
                     >
                         {page.icon}
                         <Title>{page.label}</Title>
                     </li>
                 ))}
+                <li>
+                    <a href="/api/auth/logout" className="nav-item">
+                        <ArrowLeftOnRectangleIcon className="h-5 w-5 text-tremor-content-emphasis" />
+                        <Title>Logout</Title>
+                    </a>
+                </li>
             </ul>
 
             <style jsx>{`
-                .nav-list > li {
+                .nav-item {
                     @apply flex items-center gap-3 cursor-pointer px-5 py-3 rounded-lg hover:opacity-50;
                 }
             `}</style>

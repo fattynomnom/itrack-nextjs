@@ -64,11 +64,6 @@ body {
     @apply text-gray-700;
 }
 
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
 * {
     box-sizing: border-box;
 }
@@ -91,7 +86,8 @@ small {
 }
 
 a {
-    @apply text-primary;
+    text-decoration: none;
+    @apply text-blue-600 !important;
 }
 
 /* chakra drawer */

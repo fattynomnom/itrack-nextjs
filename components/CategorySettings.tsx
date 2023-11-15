@@ -1,7 +1,6 @@
 import {
     Button,
     Card,
-    Color,
     NumberInput,
     Subtitle,
     Text,
